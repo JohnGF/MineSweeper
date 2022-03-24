@@ -26,14 +26,15 @@ function creat_map_aux() {
 };
 
 //working
-function creat_map(r, c, s = 1,prob = 15) {
+function creat_map(r, c,prob = 15) {
     bomb_table = new Array();id_table = new Array();
     //if(bomb_bit=1){bomb_table = new Array();id_table = new Array();console.log("reset")}
 
     //let mapa=document.querySelector("#mapa")
     //titlo.innerHTML="MineSweeper The game"
     let oldtable = document.querySelector(".mapa");
-    if (s == 1) { r = creat_map_aux()[0]; c = creat_map_aux()[1]; };
+    r = creat_map_aux()[0]; c = creat_map_aux()[1]; 
+
     if (oldtable.innerHTML = !"") { oldtable.innerHTML = ""; };
 
     //console.log(`${r},${c}`)
