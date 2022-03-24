@@ -26,7 +26,7 @@ function creat_map_aux() {
 
 //working
 function creat_map(r, c, s = 1, prob = 15) {
-    if(bomb_table=!none){var bomb_table = new Array();var id_table = new Array();}
+    if(bomb_table=!new Array()){var bomb_table = new Array();var id_table = new Array();console.log("reset")}
 
     //let mapa=document.querySelector("#mapa")
     //titlo.innerHTML="MineSweeper The game"
