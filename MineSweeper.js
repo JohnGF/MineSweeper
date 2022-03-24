@@ -121,11 +121,31 @@ function update_score() {
     score.innerHTML = value + 50;
 
 };
-function update_score_ticker() {
+function update_score_ticker(t) {
     value = parseInt(score.innerHTML);
+    t
     score.innerHTML = value - 1;
 
-};
+}
+// function startTimer(duration, display) {
+//     document.getElementById("mapa").removeEventListener("click", startTimer);
+
+//     var timer = duration, minutes, seconds;
+//     setInterval(function () {
+//         minutes = parseInt(timer / 60, 10)
+//         seconds = parseInt(timer % 60, 10);
+
+//         minutes = minutes < 10 ? "0" + minutes : minutes;
+//         seconds = seconds < 10 ? "0" + seconds : seconds;
+
+//         display.textContent = minutes + ":" + seconds;
+
+//         if (--timer < 0) {
+//             timer = duration;
+//         }
+//     }, 1000);
+// }
+;
 function flag(id){
     let id_c = id
     var cell_tochange = document.getElementById(id_c);
