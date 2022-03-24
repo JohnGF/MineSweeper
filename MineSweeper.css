@@ -1,0 +1,149 @@
+:root{
+    --size-square:32px;
+    --blank-bright:gray;
+    --selecte-bright:rgb(70, 70, 70);
+    --menu_background:orange;
+    --text-menu:black;
+    --bomb0:  rgb(180, 179, 179);
+    --bomb1: blue;
+    --bomb2: green;
+    --bomb3: red;
+    --bomb4:  rgb(0, 87, 0);
+    --bomb5:yellow ;
+    --bomb6:url(resources/Square_six.png);
+    
+}
+#titulo_jogo{
+    text-align: center;
+}
+
+table.mapa{
+    margin-left:auto;
+    margin-right:auto;
+}
+.fitLogo{
+	width: 55px;
+    /* background-image: url("resources/logo.jpg") ; */
+}
+div.menus{
+
+    height: 50px;
+    
+    padding-top: 5px;
+
+
+}
+div.menus>ul{
+    background: var(--menu_background);
+    height: 50px;
+    list-style: none;
+}
+li {
+	float: left;
+	padding-right: 50px;
+
+
+}
+  
+li a {
+	display: inline-block;
+	align-items: space-between;
+	color: var(--text-menu);
+	text-align: center;
+	padding: 14px 28px;
+	text-decoration: none;
+	border-radius: 15px;
+}
+ 
+
+li a:hover, li a:checked{
+	background-color: #659ba7;
+	color: black;
+}
+
+tr {
+    height: 1cm;
+}
+
+table.mapa>tbody>tr>td{
+    width: 1cm;
+    background-color: var(--blank-bright);
+
+    border-style: solid;
+    width: var(--size-square);
+    height:var(--size-square);
+
+
+}
+table.mapa>tbody>tr>td:active{
+    
+    background-color: var(--selecte-bright);
+}
+.login{
+    background-color: var(--menu_background);
+
+
+}
+.map_generator{
+    display:inline-block;
+
+}
+.container_generator{
+    text-align: center;
+}
+#score_text{
+text-align: center;
+}
+.audio{
+    margin: auto;
+    margin-top: 50px;
+    width: fit-content;
+    border: 3px solid var(--menu_background);
+    padding: 10px;
+
+}
+.video1{
+    margin: auto;
+    margin-top: 50px;
+    width: fit-content;
+    border: 3px solid var(--menu_background);
+    padding: 10px;
+}
+.bomb{
+    background-image: url(resources/explosion1.png) !important;
+    background-size: cover;
+}
+.bomb0{
+    background-color: var(--bomb0) !important; 
+}
+.bomb1{
+    background-color: var(--bomb1) !important; 
+}
+.bomb2{
+    background-color: var(--bomb2) !important; 
+}
+.bomb3{
+    background-color: var(--bomb3) !important; 
+}
+.bomb4{
+    background-color: var(--bomb4) !important; 
+}
+.bomb5{
+    background-color: var(--bomb5) !important; 
+}
+.bomb6{
+    
+    background-image: var(--bomb6) !important;
+    background-size: cover;
+}
+.bomb7{
+    background-color: var(--bomb7) !important; 
+}
+.bomb8{
+    background-color: var(--bomb8) !important; 
+}
+.flag{
+    
+    background-image: url(resources/radar.png) !important;
+    background-size: cover;
+}

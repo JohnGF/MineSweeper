@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<!-- <img src="https://minesweeperonline.com/sprite100.gif" alt=""> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="MineSweeper.css">
+    <link rel="shortcut icon" href="resources/favicon.png">
+    <title>MineSweeper</title>
+</head>
+<body id="body" onload="creat_map(8,8)">
+    <header>
+        <div class="menus">
+            <ul> 
+                <li><a href="MineSweeper.html"><img class="fitLogo" src="resources/logo1.jpg" alt="Logo da Aplicação"/></a></li>
+                <li><a href="Scoreboards.html"><b>Scoreboards</b></a></li>
+                <li><a href="login.html" class="login"> <b>Login</b></a></li>
+                <li><a href="Definicoes.html"><b>Definições</b></a></li>
+                <li><a href="Tutorial.html"><b>Ajuda</b></a></li>
+
+        </div>
+
+    </header>
+    <audio class="audio" src="resources/Beethoven Sonata No 23 Appassionata 3rd Movement.mp3" controls autoplay="True"></audio>
+    <h1 id="titulo_jogo">Mine Sweeper The Game</h1>
+    <div class="container_generator">
+    <form action="javascript:;" onsubmit="creat_map(r,c)" class="map_generator">
+        <label for="r">Numero de colunas</label>
+        <input type="number" id="r" name="r">
+        <label for="c">Numero de linhas</label>
+        <input type="number" id="c" name="c">
+        <input type="submit" value="Enter">
+    </form>
+    <button onclick="reveal_map()">Mostra Mapa</button>
+    </div>
+    <table class="mapa" >
+
+    </table>
+    <h2 id="score_text">Score: <Strong id="score">1000</Strong></h2>
+    
+    <script src="MineSweeper.js"></script>
+</body>
+</html>
