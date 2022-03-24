@@ -17,7 +17,7 @@
                 <li><a href="index.html"><img class="fitLogo" src="resources/logo1.jpg" alt="Logo da Aplicação"/></a></li>
                 <li><a href="Scoreboards.html"><b>Scoreboards</b></a></li>
                 <li><a href="login.html" class="login"> <b>Login</b></a></li>
-                <li><a href="Definicoes.html"><b>Definições</b></a></li>
+                <li onclick="setting_menu()"><b class="setting">Definições</b></li>
                 <li><a href="Tutorial.html"><b>Ajuda</b></a></li>
 
         </div>
@@ -25,7 +25,7 @@
     </header>
     <audio class="audio" src="resources/Beethoven Sonata No 23 Appassionata 3rd Movement.mp3" controls autoplay="True"></audio>
     <h1 id="titulo_jogo">Mine Sweeper The Game</h1>
-    <div class="container_generator">
+    <div id="container_generator" class="hidden">
     <form action="javascript:;" onsubmit="creat_map(r,c)" class="map_generator">
         <label for="r">Numero de colunas</label>
         <input type="number" id="r" name="r">

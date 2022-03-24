@@ -47,7 +47,7 @@ li {
 
 }
   
-li a {
+li a ,li .setting{
 	display: inline-block;
 	align-items: space-between;
 	color: var(--text-menu);
@@ -58,7 +58,7 @@ li a {
 }
  
 
-li a:hover, li a:checked{
+li a:hover, li a:checked,li .setting:hover{
 	background-color: #659ba7;
 	color: black;
 }
@@ -90,8 +90,16 @@ table.mapa>tbody>tr>td:active{
     display:inline-block;
 
 }
-.container_generator{
+#container_generator{
     text-align: center;
+}
+#container_generator {
+    text-align: center;
+    transition: opacity 1s;
+}
+.hidden{
+    visibility : hidden; 
+    opacity: 0 ;
 }
 #score_text{
 text-align: center;

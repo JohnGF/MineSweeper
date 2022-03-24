@@ -133,6 +133,9 @@ function flag(id){
     // if (cell_tochange.classList.contains("flag")){cell_tochange.classList.remove("flag")}
     // if (cell_tochange.classList.contains("")){cell_tochange.classList.add("flag")}
 }
+function setting_menu(){
+    document.getElementById("container_generator").classList.toggle("hidden");
+}
 function reveal_map(){
     for (let i=0; i<id_table.length;i++){
         //console.log(`${id_table[i].i}_${id_table[i].j}`)
