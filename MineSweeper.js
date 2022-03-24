@@ -8,6 +8,7 @@ let td = document.createElement("td");
 let score = document.querySelector("#score");
 var bomb_table = new Array();
 var id_table = new Array();
+var win = 0
 
 
 table.addEventListener('contextmenu', e => {
@@ -45,6 +46,7 @@ function creat_map(r, c, s = 1,prob = 15) {
             let cell = row.insertCell(j);
             let id_cell = `${i}_${j}`
             cell.setAttribute("id", id_cell);
+            cell.classList.add("hidden_cell")
             //debug
             //cell.innerHTML = id_cell;
             cell.setAttribute("onclick", "change_cell(this.id)")
@@ -58,19 +60,24 @@ function creat_map(r, c, s = 1,prob = 15) {
             //cell.setAttribute("class","Bomb")
         };
     };
+    win = id_table.length
     return bomb_table.displ
 };
 
 function change_cell(id,g=1) {
     
     let id_c = id
+    win=win-1
+    if(win ==0){alert("Ganhas-te")}
 
     //console.log(id_c)
     //cell_tochange =id_c document.getElementById(`"${id}"`)
     const cell_tochange = document.getElementById(id_c);
     if (cell_tochange.classList.contains("flag")){return }
+
+    if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado");return}
     
-    
+
     //console.log(cell_tochange);
     split_id = id_c.split("_");
     let selected_cell = [parseInt(split_id[0]), parseInt(split_id[1])];
@@ -78,7 +85,7 @@ function change_cell(id,g=1) {
 
         if (bomb_table[it].i == selected_cell[0] && bomb_table[it].j == selected_cell[1]) {
             //console.log("its a bomb")
-            cell_tochange.classList.add("bomb");
+            cell_tochange.classList.replace("hidden_cell","bomb");
             if(g==0){alert("clicked a bomb try again!");return creat_map(r,c)}
             return
         }
@@ -97,18 +104,16 @@ function change_cell(id,g=1) {
         if (selected_cell[0] == bomb_table[itb].i && selected_cell[1] - 1 == bomb_table[itb].j) { bomb_count += 1; }
     }
     //console.log(`bombas volta:${bomb_count}`)
-    if (bomb_count == 0) { cell_tochange.classList.add("bomb0"); }
-    if (bomb_count == 1) { cell_tochange.classList.add("bomb1"); }
-    if (bomb_count == 2) { cell_tochange.classList.add("bomb2"); }
-    if (bomb_count == 3) { cell_tochange.classList.add("bomb3"); }
-    if (bomb_count == 4) { cell_tochange.classList.add("bomb4"); }
-    if (bomb_count == 5) { cell_tochange.classList.add("bomb5"); }
-    if (bomb_count == 6) { cell_tochange.classList.add("bomb6"); }
-    if (bomb_count == 7) { cell_tochange.classList.add("bomb7"); }
-    if (bomb_count == 8) { cell_tochange.classList.add("bomb8"); }
-    return
-
-
+    if (bomb_count == 0) { cell_tochange.classList.replace("hidden_cell","bomb0"); }
+    if (bomb_count == 1) { cell_tochange.classList.replace("hidden_cell","bomb1"); }
+    if (bomb_count == 2) { cell_tochange.classList.replace("hidden_cell","bomb2"); }
+    if (bomb_count == 3) { cell_tochange.classList.replace("hidden_cell","bomb3"); }
+    if (bomb_count == 4) { cell_tochange.classList.replace("hidden_cell","bomb4"); }
+    if (bomb_count == 5) { cell_tochange.classList.replace("hidden_cell","bomb5"); }
+    if (bomb_count == 6) { cell_tochange.classList.replace("hidden_cell","bomb6"); }
+    if (bomb_count == 7) { cell_tochange.classList.replace("hidden_cell","bomb7"); }
+    if (bomb_count == 8) { cell_tochange.classList.replace("hidden_cell","bomb8"); }
+    return cell_tochange.classList[0]=0
 };
 
 function clear_map() {
