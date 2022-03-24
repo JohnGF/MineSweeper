@@ -9,6 +9,7 @@ let score = document.querySelector("#score");
 var bomb_table = new Array();
 var id_table = new Array();
 
+
 table.addEventListener('contextmenu', e => {
   e.preventDefault();
 });
@@ -25,8 +26,9 @@ function creat_map_aux() {
 };
 
 //working
-function creat_map(r, c, s = 1, prob = 15) {
-    if(bomb_table=!new Array()){var bomb_table = new Array();var id_table = new Array();console.log("reset")}
+function creat_map(r, c, s = 1,prob = 15) {
+    bomb_table = new Array();id_table = new Array();
+    //if(bomb_bit=1){bomb_table = new Array();id_table = new Array();console.log("reset")}
 
     //let mapa=document.querySelector("#mapa")
     //titlo.innerHTML="MineSweeper The game"
@@ -58,6 +60,7 @@ function creat_map(r, c, s = 1, prob = 15) {
     };
     return bomb_table.displ
 };
+
 function change_cell(id,g=1) {
     
     let id_c = id

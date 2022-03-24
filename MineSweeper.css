@@ -15,6 +15,7 @@
 }
 #titulo_jogo{
     text-align: center;
+
 }
 
 table.mapa{
@@ -22,15 +23,16 @@ table.mapa{
     margin-right:auto;
 }
 .fitLogo{
-	width: 55px;
+	width: 15px;
     /* background-image: url("resources/logo.jpg") ; */
 }
 div.menus{
 
     height: 50px;
-    
+    /* position: fixed; */
     padding-top: 5px;
-
+    width: 100%;
+    top: 0;
 
 }
 div.menus>ul{
@@ -100,7 +102,9 @@ text-align: center;
     width: fit-content;
     border: 3px solid var(--menu_background);
     padding: 10px;
-
+    position: fixed;
+    bottom:5px;
+    right: 5px;
 }
 .video1{
     margin: auto;
