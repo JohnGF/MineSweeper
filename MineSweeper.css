@@ -13,6 +13,20 @@
     --bomb6:url(resources/Square_six.png);
     
 }
+#conteudo_historia{
+    display: flex;
+    justify-content: center;
+
+}
+#kmines_img,#bloco_texto{
+
+
+}
+#kmines_img{float: right;}
+#bloco_texto{float: left;
+width: 50%;
+left: 5%;
+}
 #titulo_jogo{
     text-align: center;
 
@@ -40,14 +54,14 @@ div.menus>ul{
     height: 50px;
     list-style: none;
 }
-li {
+div.menus>ul>li {
 	float: left;
 	padding-right: 50px;
 
 
 }
   
-li a ,li .setting{
+div.menus>ul>li a ,div.menus>ul>li .setting{
 	display: inline-block;
 	align-items: space-between;
 	color: var(--text-menu);
@@ -58,7 +72,7 @@ li a ,li .setting{
 }
  
 
-li a:hover, li a:checked,li .setting:hover{
+div.menus>ul>li a:hover, div.menus>ul>li a:checked,div.menus>ul>li .setting:hover{
 	background-color: #659ba7;
 	color: black;
 }
@@ -158,4 +172,30 @@ text-align: center;
     
     background-image: url(resources/radar.png) !important;
     background-size: cover;
+}
+#controls_legend{
+    border-style: dashed;
+    padding-bottom: 60px;
+
+}
+#controls_legend>ul{
+    display: inline;
+    list-style: none;
+}
+#controls_legend>ul>li{    
+    border-style: solid;
+    width: 2em;
+    height: 2em;
+    padding: 5px;
+    margin: 5px;
+}
+#controls_legend>ul>li#1{
+    background-color: var(--bomb0) !important; 
+
+}
+#controls_legend>ul>li#2{
+    background-color: var(--bomb1) !important; 
+}
+#controls_legend>ul>li#3{
+    background-color: var(--bomb2) !important; 
 }

@@ -27,7 +27,7 @@ function creat_map_aux() {
 };
 
 //working
-function creat_map(r, c, s = 1,prob = 15) {
+function creat_map(r, c, s = 1,prob = 50) {
     bomb_table = new Array();id_table = new Array();
     //if(bomb_bit=1){bomb_table = new Array();id_table = new Array();console.log("reset")}
 

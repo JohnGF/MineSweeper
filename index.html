@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <!-- <img src="https://minesweeperonline.com/sprite100.gif" alt=""> -->
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,12 +18,13 @@
                 <li><a href="Scoreboards.html"><b>Scoreboards</b></a></li>
                 <li><a href="login.html" class="login"> <b>Login</b></a></li>
                 <li onclick="setting_menu()"><b class="setting">Definições</b></li>
+                <li><a href="Historia.html"><b>Historia</b></a></li>
                 <li><a href="Tutorial.html"><b>Ajuda</b></a></li>
 
         </div>
 
     </header>
-    <audio class="audio" src="resources/Beethoven Sonata No 23 Appassionata 3rd Movement.mp3" controls autoplay="True"></audio>
+    <audio class="audio" controls autostart="True" > <source src="resources/Beethoven Sonata No 23 Appassionata 3rd Movement.mp3"type="audio/mpeg"   >Your browser does not support the html audio tag. </audio>
     <h1 id="titulo_jogo">Mine Sweeper The Game</h1>
     <div id="container_generator" class="hidden">
     <form action="javascript:;" onsubmit="creat_map(r,c)" class="map_generator">
@@ -41,7 +42,21 @@
 
     </table>
     <h2 id="score_text">Tempo: <Strong id="score">Ainda não implementado</Strong></h2>
-    
+    <div id="controls_legend">
+        <h3>Bombas a volta:</h3>
+        <ul>
+            <li id="1">1</li>
+            <li id="2">2</li>
+            <li id="3">3</li>
+            <li id="4">4</li>
+            <li id="5">5</li>
+            <li id="6">6</li>
+            <li id="7">7</li>
+            <li id="8">8</li>
+            <li id="9">9</li>
+
+        </ul>
+    </div>
     <script src="MineSweeper.js"></script>
 </body>
 </html>

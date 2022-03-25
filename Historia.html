@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!-- <img src="https://minesweeperonline.com/sprite100.gif" alt=""> -->
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="MineSweeper.css">
+    <link rel="shortcut icon" href="resources/favicon.png">
+    <title>MineSweeper</title>
+</head>
+
+<body id="body" onload="creat_map(8,8,s=0)">
+    <header>
+        <div class="menus">
+            <ul>
+                <li><a href="index.html"><img class="fitLogo" src="resources/logo1.jpg" alt="Logo da Aplicação" /></a>
+                </li>
+                <li><a href="Scoreboards.html"><b>Scoreboards</b></a></li>
+                <li><a href="login.html" class="login"> <b>Login</b></a></li>
+                <li onclick="setting_menu()"><b class="setting">Definições</b></li>
+                <li><a href="Historia.html"><b>Historia</b></a></li>
+                <li><a href="Tutorial.html"><b>Ajuda</b></a></li>
+
+        </div>
+
+    </header>
+    <audio class="audio" controls>
+        <source src="resources/Beethoven Sonata No 23 Appassionata 3rd Movement.mp3" type="audio/mpeg">Your browser does
+        not support the html audio tag.
+    </audio>
+    <h1 id="titulo_jogo">Mine Sweeper The Game</h1>
+    <div id="conteudo_historia">
+        <div id="bloco_texto">
+            <p><b>Campo minado</b> é um popular <a href="/wiki/Jogo_de_computador" title="Jogo de computador">jogo de
+                    computador</a> para um jogador. Foi inventado por Robert Donner em <a href="/wiki/1989"
+                    title="1989">1989</a> e tem como objectivo revelar um campo de minas sem que alguma seja detonada.
+                Este jogo
+                tem sido reescrito para as mais diversas <a href="/wiki/Plataforma_(inform%C3%A1tica)"
+                    class="mw-redirect" title="Plataforma (informática)">plataformas</a>, sendo a sua versão mais
+                popular a que vinha nativamente
+                nas edições anteriores ao <a href="/wiki/Windows_10" title="Windows 10">Windows 10</a>.
+            </p>
+        </div>
+
+        <img id="kmines_img" src="resources/KMines.png" alt="Kmines Aplicação com o jogo do Campo minado">
+    </div>
+    <p><i>Minesweeper</i> has its origins in the earliest mainframe games of the 1960s and 1970s. The earliest ancestor
+        of Minesweeper was <a href="/w/index.php?title=Jerimac_Ratliff&amp;action=edit&amp;redlink=1" class="new"
+            title="Jerimac Ratliff (page does not exist)">Jerimac Ratliff</a>'s <i>Cube</i>. The basic gameplay style
+        became a popular segment of the <a href="/wiki/Puzzle_video_game" title="Puzzle video game">puzzle video
+            game</a> genre during the 1980s, with titles such as <i><a href="/wiki/Mined-Out"
+                title="Mined-Out">Mined-Out</a></i> (<a href="/wiki/Quicksilva" title="Quicksilva">Quicksilva</a>,
+        1983), <i><a href="/w/index.php?title=Yomp_(video_game)&amp;action=edit&amp;redlink=1" class="new"
+                title="Yomp (video game) (page does not exist)">Yomp</a></i> (<a href="/wiki/Virgin_Interactive"
+            title="Virgin Interactive">Virgin Interactive</a>, 1983), and <i>Cube</i>. <i>Cube</i> was succeeded by
+        <i><a href="/w/index.php?title=Relentless_Logic&amp;action=edit&amp;redlink=1" class="new"
+                title="Relentless Logic (page does not exist)">Relentless Logic</a></i> (or <i>RLogic</i> for short), by
+        Conway, Hong, and Smith, available for <a href="/wiki/MS-DOS" title="MS-DOS">MS-DOS</a> as early as 1985; the
+        player took the role of a private in the <a href="/wiki/United_States_Marine_Corps"
+            title="United States Marine Corps">United States Marine Corps</a>, delivering an important message to the
+        U.S. Command Center. <i>RLogic</i> had greater similarity to <i>Minesweeper</i> than to <i>Cube</i> in concept,
+        but a number of differences exist:
+    </p>
+    <ul>
+        <li>In <i>RLogic</i>, the player must navigate through the minefield from the top left right angled corner to
+            the bottom right angled corner (the Command Center).</li>
+        <li>It is not necessary to clear all non-mine squares. Also, there is no mechanism for marking mines or counting
+            the number of mines found.</li>
+        <li>The number of steps taken is counted. Although no high score functionality is included, players could
+            attempt to beat their personal best score for a given number of mines.</li>
+        <li>Unlike <i>Minesweeper</i>, the size of the minefield is fixed. However, the player may still specify the
+            number of mines.</li>
+        <li>Because the player must navigate through the minefield, it is sometimes impossible to win&nbsp;— namely,
+            when the mines block all possible paths.</li>
+    </ul>
+    <p>The gameplay mechanics of <i>Minesweeper</i> are included in a variety of other software titles, including:
+    </p>
+    <ul>
+        <li>The mini-game Vinesweeper implemented into the <a href="/wiki/MMORPG" class="mw-redirect"
+                title="MMORPG">MMORPG</a> <i><a href="/wiki/RuneScape" title="RuneScape">RuneScape</a></i>; in this
+            iteration (written by <a href="/wiki/Jagex" title="Jagex">Jagex</a> developer Danny J), the
+            <i>Minesweeper</i> gameplay is given a large multiplayer aspect and the "game board" adopts a continually
+            resetting timer. This allows for a never-ending game of Minesweeper where the skill is assessed in points
+            rather than "game completion".</li>
+        <li>The PC game <i><a href="/w/index.php?title=Mole_Control&amp;action=edit&amp;redlink=1" class="new"
+                    title="Mole Control (page does not exist)">Mole Control</a></i> (developed by <a
+                href="/w/index.php?title=Remode&amp;action=edit&amp;redlink=1" class="new"
+                title="Remode (page does not exist)">Remode</a>); in this game, the <i>Minesweeper</i> mechanic is
+            integrated into a puzzle adventure game based in a village called Molar Creek, which has been overrun with
+            exploding moles. The player acts as the local inventor's assistant, who is tasked with clearing the village
+            of exploding moles. A time attack mode, called the Molar Creek Annual Mole Control competition, is also
+            available.</li>
+    </ul>
+</body>
+
+</html>
