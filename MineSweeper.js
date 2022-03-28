@@ -20,21 +20,24 @@ table.addEventListener('contextmenu', e => {
 function creat_map_aux() {
     localStorage.setItem("row", document.querySelector("#r").value);
     localStorage.setItem("col", document.querySelector("#c").value);
+    localStorage.setItem("prob", document.querySelector("#prob").value);
     let r = localStorage.getItem("row");
     let c = localStorage.getItem("col");
+    let prob = localStorage.getItem("prob");
     if(r>100 | c>100){alert("numero de linhas ou colunas excede 100");return}
-    return [r, c]
+    if(-1<prob<101){alert("probabilidade não valida");return}
+    return [r, c,prob]
 };
 
 //working
-function creat_map(r, c, s = 1,prob = 50) {
+function creat_map(r, c,prob, s = 1,) {
     bomb_table = new Array();id_table = new Array();
     //if(bomb_bit=1){bomb_table = new Array();id_table = new Array();console.log("reset")}
 
     //let mapa=document.querySelector("#mapa")
     //titlo.innerHTML="MineSweeper The game"
     let oldtable = document.querySelector(".mapa");
-    if (s == 1) { r = creat_map_aux()[0]; c = creat_map_aux()[1]; };
+    if (s == 1) { r = creat_map_aux()[0]; c = creat_map_aux()[1];prob=creat_map_aux()[2] };
     if (oldtable.innerHTML = !"") { oldtable.innerHTML = ""; };
 
     //console.log(`${r},${c}`)

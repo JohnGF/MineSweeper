@@ -174,12 +174,17 @@ text-align: center;
     background-size: cover;
 }
 #controls_legend{
+
     border-style: dashed;
     padding-bottom: 60px;
+    margin: 5%;
+    height: 5em;
+    width: 90%;
+
 
 }
 #controls_legend>ul{
-    display: inline;
+    display: inline-flex;
     list-style: none;
 }
 #controls_legend>ul>li{    
@@ -189,13 +194,31 @@ text-align: center;
     padding: 5px;
     margin: 5px;
 }
-#controls_legend>ul>li#1{
-    background-color: var(--bomb0) !important; 
+html body#body div#controls_legend ul li#0{
+    background-color: var(--bomb0) !important
 
 }
-#controls_legend>ul>li#2{
+#\31 {
     background-color: var(--bomb1) !important; 
 }
-#controls_legend>ul>li#3{
+#\32 {
     background-color: var(--bomb2) !important; 
+}
+#\33{
+    background-color: var(--bomb3) !important; 
+}
+#\34{
+    background-color: var(--bomb4) !important; 
+}
+#\35{
+    background-color: var(--bomb5) !important; 
+}
+#\36{
+    background-color: var(--bomb6) !important; 
+}
+#\37{
+    background-color: var(--bomb7) !important; 
+}
+#\38{
+    background-color: var(--bomb8) !important; 
 }
