@@ -5,13 +5,23 @@
     --menu_background:orange;
     --text-menu:black;
     --bomb0:  rgb(180, 179, 179);
+    --bomb1: url(resources/simple_numbers/1.png);
+    --bomb2: url(resources/simple_numbers/2.png);
+    --bomb3: url(resources/simple_numbers/3.png);
+    --bomb4: url(resources/simple_numbers/4.png);
+    --bomb5: url(resources/simple_numbers/5.png);
+    --bomb6: url(resources/simple_numbers/6.png);
+    --bomb7: url(resources/simple_numbers/7.png);
+    --bomb8: url(resources/simple_numbers/8.png);
+    
+}
+:color{
+    --bomb0:  rgb(180, 179, 179);
     --bomb1: blue;
     --bomb2: green;
     --bomb3: red;
     --bomb4:  rgb(0, 87, 0);
     --bomb5:yellow ;
-    --bomb6:url(resources/Square_six.png);
-    
 }
 #conteudo_historia{
     display: flex;
@@ -141,32 +151,47 @@ text-align: center;
 }
 .bomb0{
     background-color: var(--bomb0) !important; 
+
 }
 .bomb1{
-    background-color: var(--bomb1) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb1) !important; 
+    background-size: cover;
 }
 .bomb2{
-    background-color: var(--bomb2) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb2) !important; 
+    background-size: cover;
 }
 .bomb3{
-    background-color: var(--bomb3) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb3) !important;
+    background-size: cover; 
 }
 .bomb4{
-    background-color: var(--bomb4) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb4) !important; 
+    background-size: cover;
 }
 .bomb5{
-    background-color: var(--bomb5) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb5) !important;
+    background-size: cover; 
 }
 .bomb6{
-    
+    background-color: var(--bomb0) !important;
     background-image: var(--bomb6) !important;
     background-size: cover;
 }
 .bomb7{
-    background-color: var(--bomb7) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb7) !important;
+    background-size: cover; 
 }
 .bomb8{
-    background-color: var(--bomb8) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb8) !important;
+    background-size: cover; 
 }
 .flag{
     
@@ -194,31 +219,48 @@ text-align: center;
     padding: 5px;
     margin: 5px;
 }
-html body#body div#controls_legend ul li#0{
-    background-color: var(--bomb0) !important
+
+#\30{
+    background-color: var(--bomb0) !important;
 
 }
 #\31 {
-    background-color: var(--bomb1) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb1) !important;
+    background-size: cover; 
 }
 #\32 {
-    background-color: var(--bomb2) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb2) !important;
+    background-size: cover; 
 }
 #\33{
-    background-color: var(--bomb3) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb3) !important;
+    background-size: cover; 
 }
 #\34{
-    background-color: var(--bomb4) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb4) !important;
+    background-size: cover; 
 }
 #\35{
-    background-color: var(--bomb5) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb5) !important;
+    background-size: cover; 
 }
 #\36{
-    background-color: var(--bomb6) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb6) !important;
+    background-size: cover; 
 }
 #\37{
-    background-color: var(--bomb7) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb7) !important;
+    background-size: cover; 
 }
 #\38{
-    background-color: var(--bomb8) !important; 
+    background-color: var(--bomb0) !important;
+    background-image: var(--bomb8) !important;
+    background-size: cover; 
 }
