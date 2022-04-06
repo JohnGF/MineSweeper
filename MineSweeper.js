@@ -3,7 +3,7 @@ let multi_table= document.querySelector("table.mapa1");
 let map_generator = document.querySelector(".map_generator");
 
 let titlo = document.querySelector("#titulo_jogo");
-let = document.createElement("tr");
+//let tr= document.createElement("tr");
 let td = document.createElement("td");
 
 let score = document.querySelector("#score");
@@ -11,6 +11,7 @@ var bomb_table = new Array();
 var id_table = new Array();
 var win = 0
 let multi=0
+let old_time=0
 
 
 
@@ -134,7 +135,7 @@ function change_cell(id,g=1) {
         }
 
 
-    };
+    }
     var bomb_count = 0;
     for (let itb = 0; itb < bomb_table.length; itb++) {
         if (selected_cell[0] + 1 == bomb_table[itb].i && selected_cell[1] + 1 == bomb_table[itb].j) { bomb_count += 1; }
@@ -157,7 +158,7 @@ function change_cell(id,g=1) {
     if (bomb_count == 7) { cell_tochange.classList.replace("hidden_cell","bomb7"); }
     if (bomb_count == 8) { cell_tochange.classList.replace("hidden_cell","bomb8"); }
     return cell_tochange.classList[0]=0
-};
+}
 
 function clear_map() {
     let oldtable = document.querySelector(".mapa");
@@ -165,15 +166,19 @@ function clear_map() {
 
 }
 function update_score() {
+
+    currentDate.getSeconds();
     value = parseInt(score.innerHTML);
     score.innerHTML = value + 50;
 
-};
-function update_score_ticker(t) {
-    value = parseInt(score.innerHTML);
-    score.innerHTML = value - 1;
-
 }
+function update_score_ticker() {
+    if (old_time==0){old_time=currentDate.getSeconds()}
+    if(oldtime-currentDate.getSeconds()==1){old_time=currentDate.getSeconds();time-=1}
+    score.innerHTML=time
+}
+
+
 // function startTimer(duration, display) {
 //     document.getElementById("mapa").removeEventListener("click", startTimer);
 
@@ -192,7 +197,7 @@ function update_score_ticker(t) {
 //         }
 //     }, 1000);
 // }
-;
+
 function flag(id){
     let id_c = id
     var cell_tochange = document.getElementById(id_c);
@@ -213,3 +218,5 @@ function reveal_map(){
     }
 
 }
+// while (true){update_score_ticker(),console.log("running")
+// if(time==0){break}}
