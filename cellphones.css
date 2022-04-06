@@ -19,3 +19,6 @@ table.mapa, table.mapa1 {
 	display: block;
 
 }
+.map_generator {
+	display: contents;
+}

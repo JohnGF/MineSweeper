@@ -4,8 +4,8 @@ let map_generator = document.querySelector(".map_generator");
 
 let titlo = document.querySelector("#titulo_jogo");
 let = document.createElement("tr");
-
 let td = document.createElement("td");
+
 let score = document.querySelector("#score");
 var bomb_table = new Array();
 var id_table = new Array();
@@ -115,6 +115,7 @@ function change_cell(id,g=1) {
     //console.log(id_c)
     //cell_tochange =id_c document.getElementById(`"${id}"`)
     const cell_tochange = document.getElementById(id_c);
+    if(cell_tochange==null){return}
     if (cell_tochange.classList.contains("flag")){return }
     if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado");return }
     if(win==1){alert("Ganhaste")}
@@ -170,7 +171,6 @@ function update_score() {
 };
 function update_score_ticker(t) {
     value = parseInt(score.innerHTML);
-    t
     score.innerHTML = value - 1;
 
 }
@@ -206,8 +206,10 @@ function setting_menu(){
 function reveal_map(){
     for (let i=0; i<id_table.length;i++){
         //console.log(`${id_table[i].i}_${id_table[i].j}`)
-        change_cell(`${id_table[i].i}_${id_table[i].j}`)
-        if(multi=1){change_cell(`${id_table[i].i}_${id_table[i].j}_1`)}
+        
+        if(multi=1){change_cell(`${id_table[i].i}_${id_table[i].j}_1`);change_cell(`${id_table[i].i}_${id_table[i].j}`)}
+        else{change_cell(`${id_table[i].i}_${id_table[i].j}`)}
+
     }
 
 }

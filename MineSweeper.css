@@ -122,13 +122,8 @@ table.mapa>tbody>tr>td:active,table.mapa1>tbody>tr>td:active{
 }
 .login{
     background-color: var(--menu_background);
-
-
 }
-.map_generator{
-    display:inline-block;
 
-}
 #container_generator{
     padding: 1em;
     background: rgb(250, 202, 113);
@@ -216,7 +211,7 @@ text-align: center;
     background-size: cover;
 }
 #controls_legend{
-
+    display: none;
     border-style: dashed;
     padding-bottom: 60px;
     margin: 5%;
