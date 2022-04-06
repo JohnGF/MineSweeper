@@ -1,0 +1,21 @@
+#container_generator{
+    display: grid   ;
+}
+.menus{
+    display: none;
+}
+#container_generator{
+    visibility : visible; 
+    opacity: 100 ;
+    display: grid;
+}
+table.mapa, table.mapa1 {
+	margin-left: auto;
+	margin-right: auto;
+	border: solid;
+	margin: 1em;
+}
+#game_container{
+	display: block;
+
+}
