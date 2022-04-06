@@ -1,3 +1,4 @@
+@import "cellphones.css" screen and (max-width: 768px);
 :root{
     --size-square:32px;
     --blank-bright:gray;
@@ -23,6 +24,17 @@
     --bomb4:  rgb(0, 87, 0);
     --bomb5:yellow ;
 }
+.credentials{
+    text-align: center;
+}
+.game_container_1{
+    display: grid;
+    grid-template-columns: auto auto ;
+    grid-template-rows: auto auto;
+}
+#score_text {
+	grid-column: 1/span 2;
+}
 #conteudo_historia{
     display: flex;
     justify-content: center;
@@ -42,7 +54,7 @@ left: 5%;
 
 }
 
-table.mapa{
+table.mapa,table.mapa1{
     margin-left:auto;
     margin-right:auto;
 }
@@ -91,7 +103,7 @@ tr {
     height: 1cm;
 }
 
-table.mapa>tbody>tr>td{
+table.mapa>tbody>tr>td,table.mapa1>tbody>tr>td{
     width: 1cm;
     background-color: var(--blank-bright);
 
@@ -101,7 +113,7 @@ table.mapa>tbody>tr>td{
 
 
 }
-table.mapa>tbody>tr>td:active{
+table.mapa>tbody>tr>td:active,table.mapa1>tbody>tr>td:active{
     
     background-color: var(--selecte-bright);
 }
@@ -115,6 +127,8 @@ table.mapa>tbody>tr>td:active{
 
 }
 #container_generator{
+    padding: 1em;
+    border: dashed orange;
     text-align: center;
 }
 #container_generator {

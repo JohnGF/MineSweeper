@@ -1,4 +1,5 @@
 let table = document.querySelector("table.mapa");
+let multi_table= document.querySelector("table.mapa1");
 let map_generator = document.querySelector(".map_generator");
 
 let titlo = document.querySelector("#titulo_jogo");
@@ -9,6 +10,7 @@ let score = document.querySelector("#score");
 var bomb_table = new Array();
 var id_table = new Array();
 var win = 0
+
 
 
 table.addEventListener('contextmenu', e => {
@@ -24,25 +26,27 @@ function creat_map_aux() {
     let r = localStorage.getItem("row");
     let c = localStorage.getItem("col");
     let prob = localStorage.getItem("prob");
+    
     if(r>100 | c>100){alert("numero de linhas ou colunas excede 100");return}
-    if(-1<prob<101){alert("probabilidade não valida");return}
+    if(prob<0 | prob>101){alert("probabilidade não valida");return }
     return [r, c,prob]
 };
 
 //working
-function creat_map(r, c,prob, s = 1,) {
+function creat_map(r, c,prob,multi=0,s = 1) {
     bomb_table = new Array();id_table = new Array();
+    
     //if(bomb_bit=1){bomb_table = new Array();id_table = new Array();console.log("reset")}
-
     //let mapa=document.querySelector("#mapa")
     //titlo.innerHTML="MineSweeper The game"
+
     let oldtable = document.querySelector(".mapa");
     if (s == 1) { r = creat_map_aux()[0]; c = creat_map_aux()[1];prob=creat_map_aux()[2] };
     if (oldtable.innerHTML = !"") { oldtable.innerHTML = ""; };
 
     //console.log(`${r},${c}`)
 
-
+    
     for (let i = 0; i < r; i++) {
         let row = table.insertRow(i);
         for (let j = 0; j < c; j++) {
@@ -57,29 +61,61 @@ function creat_map(r, c,prob, s = 1,) {
 
 
             if (Math.floor(Math.random() * 101) < prob) {
-                bomb_table.push({ i: i, j: j });
+                bomb_table.push({ i: i, j: j,m:0 });
             }
-            id_table.push({ i: i, j: j }); 
+            else(id_table.push({ i: i, j: j,m:0 })); 
             //cell.setAttribute("class","Bomb")
         };
     };
-    win = id_table.length
+    //----
+    win = id_table.lengt
+    //----
+    if(multi==1){
+        for (let i = 0; i < r; i++) {
+            let row = multi_table.insertRow(i);
+            for (let j = 0; j < c; j++) {
+                let cell = row.insertCell(j);
+                let id_cell = `${i}_${j}_1`
+                cell.setAttribute("id", id_cell);
+                cell.classList.add("hidden_cell")
+                //debug
+                //cell.innerHTML = id_cell;
+                cell.setAttribute("onclick", "change_cell(this.id)")
+                cell.setAttribute("oncontextmenu","flag(this.id)")
+    
+    
+                if (Math.floor(Math.random() * 101) < prob) {
+                    bomb_table.push({ i: i, j: j,m:1 });
+                }
+                else(id_table.push({ i: i, j: j,m:1 })); 
+                //cell.setAttribute("class","Bomb")
+            };
+        };
+
+    }
     return bomb_table.displ
 };
+function multiplayer(){
+    creat_map(r, c,prob,multi=1,s = 1)
+    document.getElementById("game_container").classList.add("game_container1")
+}
 
 function change_cell(id,g=1) {
     
     let id_c = id
-    win=win-1
-    if(win ==0){alert("Ganhas-te")}
+    // console.log(id_table)
+    // let helper=0
+    // for (let i=0;i< id_table.length || helper==0;i++){
+    //     if(id == id_table[i]){console.log("works");helper+=1}}
+    
 
     //console.log(id_c)
     //cell_tochange =id_c document.getElementById(`"${id}"`)
     const cell_tochange = document.getElementById(id_c);
     if (cell_tochange.classList.contains("flag")){return }
-
-    if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado");return}
-    
+    if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado");return }
+    if(win==1){alert("Ganhaste")}
+    win-=1
 
     //console.log(cell_tochange);
     split_id = id_c.split("_");
@@ -89,7 +125,7 @@ function change_cell(id,g=1) {
         if (bomb_table[it].i == selected_cell[0] && bomb_table[it].j == selected_cell[1]) {
             //console.log("its a bomb")
             cell_tochange.classList.replace("hidden_cell","bomb");
-            if(g==0){alert("clicked a bomb try again!");return creat_map(r,c)}
+            if(g==1){alert("clicked a bomb try again!");return creat_map(r,c)}
             return
         }
 
