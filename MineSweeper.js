@@ -10,6 +10,7 @@ let score = document.querySelector("#score");
 var bomb_table = new Array();
 var id_table = new Array();
 var win = 0
+let multi=0
 
 
 
@@ -96,8 +97,10 @@ function creat_map(r, c,prob,multi=0,s = 1) {
     return bomb_table.displ
 };
 function multiplayer(){
+    multi=1
     creat_map(r, c,prob,multi=1,s = 1)
     document.getElementById("game_container").classList.add("game_container1")
+    creat_map(r, c,prob,multi=0,s = 1)
 }
 
 function change_cell(id,g=1) {
@@ -204,7 +207,7 @@ function reveal_map(){
     for (let i=0; i<id_table.length;i++){
         //console.log(`${id_table[i].i}_${id_table[i].j}`)
         change_cell(`${id_table[i].i}_${id_table[i].j}`)
-        
+        if(multi=1){change_cell(`${id_table[i].i}_${id_table[i].j}_1`)}
     }
 
 }
