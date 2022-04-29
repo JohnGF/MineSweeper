@@ -20,12 +20,31 @@ let old_time=0
 var bomb_count = 0;
 let r = 8;
 let c = 8;
-
+let SList=new Array();
 
 table.addEventListener('contextmenu', e => {
   e.preventDefault();
 });
+function first_click(){
 
+};
+function explorer(SList) {
+    id=SList.shift()
+    split_id = id.split("_");
+    let selected_cell = [parseInt(split_id[0],10), parseInt(split_id[1],10),parseInt(split_id[2],10)];
+    console.log(selected_cell)
+    change_cell(`${selected_cell[0]+1}_${selected_cell[1]}_${selected_cell[2]}`)
+    change_cell(`${selected_cell[0]}_${selected_cell[1]+1}_${selected_cell[2]}`)
+    change_cell(`${selected_cell[0]+1}_${selected_cell[1]+1}_${selected_cell[2]}`)
+
+    change_cell(`${selected_cell[0]-1}_${selected_cell[1]}_${selected_cell[2]}`)
+    change_cell(`${selected_cell[0]}_${selected_cell[1]-1}_${selected_cell[2]}`)
+    change_cell(`${selected_cell[0]-1}_${selected_cell[1]-1}_${selected_cell[2]}`)
+selected_cell
+    change_cell(`${selected_cell[0]+1}_${selected_cell[1]-1}_${selected_cell[2]}`)
+    change_cell(`${selected_cell[0]-1}_${selected_cell[1]+1}_${selected_cell[2]}`)
+
+};
 function creat_map_aux() {
     localStorage.setItem("row", document.querySelector("#r").value);
     localStorage.setItem("col", document.querySelector("#c").value);
@@ -61,7 +80,6 @@ function creat_map(r, c,prob,mapa,s = 1) {
 
             cell.setAttribute("onclick", "change_cell(this.id)")
             cell.setAttribute("oncontextmenu","flag(this.id)")
-
 
             if (Math.floor(Math.random() * 101) < prob) {
                 bomb_table.push({ i: i, j: j,m:0 });
@@ -160,7 +178,7 @@ function change_cell(id,g=1) {
     } }  
     
     //console.log(`bombas volta:${bomb_count}`)
-    if (bomb_count == 0) { cell_tochange.classList.replace("hidden_cell","bomb0"); }
+    if (bomb_count == 0) { cell_tochange.classList.replace("hidden_cell","bomb0");SList.push(id);explorer(SList) }
     if (bomb_count == 1) { cell_tochange.classList.replace("hidden_cell","bomb1"); }
     if (bomb_count == 2) { cell_tochange.classList.replace("hidden_cell","bomb2"); }
     if (bomb_count == 3) { cell_tochange.classList.replace("hidden_cell","bomb3"); }
