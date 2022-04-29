@@ -1,3 +1,4 @@
+/* <!-- Grupo: 47, Número: 54572/58660 , Nome: João Garcia Farinha/Amorim Jerónimo, PL: 21 -->). */
 @import "cellphones.css" screen and (max-width: 768px);
 :root{
     --size-square:32px;
@@ -23,6 +24,18 @@
     --bomb3: red;
     --bomb4:  rgb(0, 87, 0);
     --bomb5:yellow ;
+}
+
+.table_score{
+    margin-left: auto;
+    margin-right: auto;
+    width: 30em;
+    text-align: center;
+
+}
+.table_score,td ,tr ,th{
+    border: solid black;
+    border-collapse: collapse;
 }
 .credentials{
     text-align: center;

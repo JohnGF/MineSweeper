@@ -1,3 +1,6 @@
 # MineSweeper
-Attemp to do the game of Mine Sweeper
+available on:
+https://johngf.github.io/MineSweeper/
+
+Version of the classic game Mine Sweeper
 Under Apache License

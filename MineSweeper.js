@@ -7,26 +7,31 @@ let titlo = document.querySelector("#titulo_jogo");
 let td = document.createElement("td");
 
 let score = document.querySelector("#score");
-var bomb_table = new Array();
-var id_table = new Array();
+let bomb_table = new Array();
+let id_table = new Array();
+//multiplayer
+let bomb_table_1 = new Array();
+let id_table_1 = new Array();
+let multi=0;
+//
 var win = 0
-let multi=0
-let old_time=0
 
+let old_time=0
+var bomb_count = 0;
+let r = 8;
+let c = 8;
 
 
 table.addEventListener('contextmenu', e => {
   e.preventDefault();
 });
 
-
-
 function creat_map_aux() {
     localStorage.setItem("row", document.querySelector("#r").value);
     localStorage.setItem("col", document.querySelector("#c").value);
     localStorage.setItem("prob", document.querySelector("#prob").value);
-    let r = localStorage.getItem("row");
-    let c = localStorage.getItem("col");
+    r = localStorage.getItem("row");
+    c = localStorage.getItem("col");
     let prob = localStorage.getItem("prob");
     
     if(r>100 | c>100){alert("numero de linhas ou colunas excede 100");return}
@@ -34,30 +39,26 @@ function creat_map_aux() {
     return [r, c,prob]
 };
 
-//working
-function creat_map(r, c,prob,multi=0,s = 1) {
+//up is working
+function creat_map(r, c,prob,mapa,s = 1) {
     bomb_table = new Array();id_table = new Array();
     
-    //if(bomb_bit=1){bomb_table = new Array();id_table = new Array();console.log("reset")}
-    //let mapa=document.querySelector("#mapa")
-    //titlo.innerHTML="MineSweeper The game"
-
     let oldtable = document.querySelector(".mapa");
     if (s == 1) { r = creat_map_aux()[0]; c = creat_map_aux()[1];prob=creat_map_aux()[2] };
-    if (oldtable.innerHTML = !"") { oldtable.innerHTML = ""; };
+    if (oldtable.innerHTML !="") { oldtable.innerHTML = ""; };
 
     //console.log(`${r},${c}`)
 
-    
+
+    clear_map(".mapa") 
     for (let i = 0; i < r; i++) {
         let row = table.insertRow(i);
         for (let j = 0; j < c; j++) {
             let cell = row.insertCell(j);
-            let id_cell = `${i}_${j}`
+            let id_cell = `${i}_${j}_0`
             cell.setAttribute("id", id_cell);
             cell.classList.add("hidden_cell")
-            //debug
-            //cell.innerHTML = id_cell;
+
             cell.setAttribute("onclick", "change_cell(this.id)")
             cell.setAttribute("oncontextmenu","flag(this.id)")
 
@@ -66,13 +67,16 @@ function creat_map(r, c,prob,multi=0,s = 1) {
                 bomb_table.push({ i: i, j: j,m:0 });
             }
             else(id_table.push({ i: i, j: j,m:0 })); 
-            //cell.setAttribute("class","Bomb")
+
         };
     };
+
     //----
     win = id_table.lengt
     //----
     if(multi==1){
+        clear_map(".mapa1") 
+        multi_table.innerHTML=""
         for (let i = 0; i < r; i++) {
             let row = multi_table.insertRow(i);
             for (let j = 0; j < c; j++) {
@@ -80,8 +84,7 @@ function creat_map(r, c,prob,multi=0,s = 1) {
                 let id_cell = `${i}_${j}_1`
                 cell.setAttribute("id", id_cell);
                 cell.classList.add("hidden_cell")
-                //debug
-                //cell.innerHTML = id_cell;
+
                 cell.setAttribute("onclick", "change_cell(this.id)")
                 cell.setAttribute("oncontextmenu","flag(this.id)")
     
@@ -90,63 +93,72 @@ function creat_map(r, c,prob,multi=0,s = 1) {
                     bomb_table.push({ i: i, j: j,m:1 });
                 }
                 else(id_table.push({ i: i, j: j,m:1 })); 
-                //cell.setAttribute("class","Bomb")
+
             };
         };
 
     }
-    return bomb_table.displ
+    return bomb_table
 };
-function multiplayer(){
+function multiplayer(l=0){
     multi=1
-    creat_map(r, c,prob,multi=1,s = 1)
+    creat_map(r, c,prob,s = 1)
+
     document.getElementById("game_container").classList.add("game_container1")
-    creat_map(r, c,prob,multi=0,s = 1)
+
+    if (l==0){
+        creat_map(r, c,prob,s = 1)}
 }
 
 function change_cell(id,g=1) {
     
     let id_c = id
-    // console.log(id_table)
-    // let helper=0
-    // for (let i=0;i< id_table.length || helper==0;i++){
-    //     if(id == id_table[i]){console.log("works");helper+=1}}
-    
-
-    //console.log(id_c)
-    //cell_tochange =id_c document.getElementById(`"${id}"`)
     const cell_tochange = document.getElementById(id_c);
-    if(cell_tochange==null){return}
+    if (cell_tochange==null){return}
     if (cell_tochange.classList.contains("flag")){return }
     if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado");return }
-    if(win==1){alert("Ganhaste")}
+    if (win==1){alert("Ganhaste")}
     win-=1
 
-    //console.log(cell_tochange);
     split_id = id_c.split("_");
-    let selected_cell = [parseInt(split_id[0]), parseInt(split_id[1])];
+    let selected_cell = [parseInt(split_id[0],10), parseInt(split_id[1],10),parseInt(split_id[2],10)];
     for (let it = 0; it < bomb_table.length; it++) {
-
-        if (bomb_table[it].i == selected_cell[0] && bomb_table[it].j == selected_cell[1]) {
-            //console.log("its a bomb")
-            cell_tochange.classList.replace("hidden_cell","bomb");
-            if(g==1){alert("clicked a bomb try again!");return creat_map(r,c)}
-            return
+        if (bomb_table[it].i == selected_cell[0] && bomb_table[it].j == selected_cell[1] && bomb_table[it].m==selected_cell[2]){
+            cell_tochange.classList.replace("hidden_cell","bomb")
+            if(selected_cell[2]==1){return alert("jogador 2 perdeu"),multiplayer(l=1)}
+            if(selected_cell[2]==0){return alert("jogador 1 perdeu"),creat_map(r,c)}
         }
 
-
+        // if (bomb_table[it].i == selected_cell[0] && bomb_table[it].j == selected_cell[1]) {
+        //     cell_tochange.classList.replace("hidden_cell","bomb");
+        //     if(g==1){alert("clicked a bomb try again!");return creat_map(r,c)}
+        //     return
+        // }
     }
-    var bomb_count = 0;
+    bomb_count = 0;
+    if(selected_cell[2]==0){
     for (let itb = 0; itb < bomb_table.length; itb++) {
-        if (selected_cell[0] + 1 == bomb_table[itb].i && selected_cell[1] + 1 == bomb_table[itb].j) { bomb_count += 1; }
-        if (selected_cell[0] + 1 == bomb_table[itb].i && selected_cell[1] == bomb_table[itb].j) { bomb_count += 1; }
-        if (selected_cell[0] + 1 == bomb_table[itb].i && selected_cell[1] - 1 == bomb_table[itb].j) { bomb_count += 1; }
-        if (selected_cell[0] == bomb_table[itb].i && selected_cell[1] + 1 == bomb_table[itb].j) { bomb_count += 1; }
-        if (selected_cell[0] - 1 == bomb_table[itb].i && selected_cell[1] - 1 == bomb_table[itb].j) { bomb_count += 1; }
-        if (selected_cell[0] - 1 == bomb_table[itb].i && selected_cell[1] + 1 == bomb_table[itb].j) { bomb_count += 1; }
-        if (selected_cell[0] - 1 == bomb_table[itb].i && selected_cell[1] == bomb_table[itb].j) { bomb_count += 1; }
-        if (selected_cell[0] == bomb_table[itb].i && selected_cell[1] - 1 == bomb_table[itb].j) { bomb_count += 1; }
-    }
+        if (selected_cell[0] + 1 == bomb_table[itb].i && selected_cell[1] + 1 == bomb_table[itb].j && 0==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] + 1 == bomb_table[itb].i && selected_cell[1] == bomb_table[itb].j     && 0==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] + 1 == bomb_table[itb].i && selected_cell[1] - 1 == bomb_table[itb].j && 0==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] == bomb_table[itb].i && selected_cell[1] + 1 == bomb_table[itb].j     && 0==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] - 1 == bomb_table[itb].i && selected_cell[1] - 1 == bomb_table[itb].j && 0==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] - 1 == bomb_table[itb].i && selected_cell[1] + 1 == bomb_table[itb].j && 0==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] - 1 == bomb_table[itb].i && selected_cell[1] == bomb_table[itb].j     && 0==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] == bomb_table[itb].i && selected_cell[1] - 1 == bomb_table[itb].j     && 0==bomb_table[itb].m) { bomb_count += 1; }
+    } }
+    if(selected_cell[2]==1){
+    for (let itb = 0; itb < bomb_table.length; itb++) {
+        if (selected_cell[0] + 1 == bomb_table[itb].i && selected_cell[1] + 1 == bomb_table[itb].j && 1==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] + 1 == bomb_table[itb].i && selected_cell[1] == bomb_table[itb].j     && 1==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] + 1 == bomb_table[itb].i && selected_cell[1] - 1 == bomb_table[itb].j && 1==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] == bomb_table[itb].i && selected_cell[1] + 1 == bomb_table[itb].j     && 1==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] - 1 == bomb_table[itb].i && selected_cell[1] - 1 == bomb_table[itb].j && 1==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] - 1 == bomb_table[itb].i && selected_cell[1] + 1 == bomb_table[itb].j && 1==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] - 1 == bomb_table[itb].i && selected_cell[1] == bomb_table[itb].j     && 1==bomb_table[itb].m) { bomb_count += 1; }
+        if (selected_cell[0] == bomb_table[itb].i && selected_cell[1] - 1 == bomb_table[itb].j     && 1==bomb_table[itb].m) { bomb_count += 1; }
+    } }  
+    
     //console.log(`bombas volta:${bomb_count}`)
     if (bomb_count == 0) { cell_tochange.classList.replace("hidden_cell","bomb0"); }
     if (bomb_count == 1) { cell_tochange.classList.replace("hidden_cell","bomb1"); }
@@ -160,10 +172,9 @@ function change_cell(id,g=1) {
     return cell_tochange.classList[0]=0
 }
 
-function clear_map() {
-    let oldtable = document.querySelector(".mapa");
+function clear_map(mapa) {
+    let oldtable = document.querySelector(mapa);
     oldtable.innerHTML = "";
-
 }
 function update_score() {
 
@@ -211,10 +222,7 @@ function setting_menu(){
 function reveal_map(){
     for (let i=0; i<id_table.length;i++){
         //console.log(`${id_table[i].i}_${id_table[i].j}`)
-        
-        if(multi=1){change_cell(`${id_table[i].i}_${id_table[i].j}_1`);change_cell(`${id_table[i].i}_${id_table[i].j}`)}
-        else{change_cell(`${id_table[i].i}_${id_table[i].j}`)}
-
+        change_cell(`${id_table[i].i}_${id_table[i].j}_${id_table[i].m}`)
     }
 
 }
