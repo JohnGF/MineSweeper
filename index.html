@@ -40,7 +40,10 @@
     </form>
     <button onclick="reveal_map()">Mostra Mapa</button>
     <button onclick="multiplayer()">Multiplayer</button>
+    <button onclick="creat_map(r,c,prob,multi=0,s = 1)">Restart</button>
     </div>
+    <div id="bomb_count">Número de Bombas:</div>
+    <div id="bomb_count_flag">Bombas com bandeira:</div>
     <div id="game_container">
         <table class="mapa" id="clock">
 
@@ -49,6 +52,7 @@
         </table>
         <h2 id="score_text">Tempo: <Strong id="score">Ainda não implementado</Strong></h2>
     </div>
+
     <div id="controls_legend">
         <h3>Bombas a volta:</h3>
         <ul>

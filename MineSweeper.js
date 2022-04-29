@@ -18,10 +18,12 @@ var win = 0
 
 let old_time=0
 var bomb_count = 0;
-let r = 8;
-let c = 8;
+let r = 9;
+let c = 9;
 let SList=new Array();
-
+let f_click=0
+let win_condition=0
+let s=0
 table.addEventListener('contextmenu', e => {
   e.preventDefault();
 });
@@ -32,7 +34,7 @@ function explorer(SList) {
     id=SList.shift()
     split_id = id.split("_");
     let selected_cell = [parseInt(split_id[0],10), parseInt(split_id[1],10),parseInt(split_id[2],10)];
-    console.log(selected_cell)
+    //console.log(selected_cell)
     change_cell(`${selected_cell[0]+1}_${selected_cell[1]}_${selected_cell[2]}`)
     change_cell(`${selected_cell[0]}_${selected_cell[1]+1}_${selected_cell[2]}`)
     change_cell(`${selected_cell[0]+1}_${selected_cell[1]+1}_${selected_cell[2]}`)
@@ -40,7 +42,7 @@ function explorer(SList) {
     change_cell(`${selected_cell[0]-1}_${selected_cell[1]}_${selected_cell[2]}`)
     change_cell(`${selected_cell[0]}_${selected_cell[1]-1}_${selected_cell[2]}`)
     change_cell(`${selected_cell[0]-1}_${selected_cell[1]-1}_${selected_cell[2]}`)
-selected_cell
+
     change_cell(`${selected_cell[0]+1}_${selected_cell[1]-1}_${selected_cell[2]}`)
     change_cell(`${selected_cell[0]-1}_${selected_cell[1]+1}_${selected_cell[2]}`)
 
@@ -52,7 +54,11 @@ function creat_map_aux() {
     r = localStorage.getItem("row");
     c = localStorage.getItem("col");
     let prob = localStorage.getItem("prob");
-    
+    if(r=="" && c==""&& prob=="") {
+        r=9;c=9;prob=25
+        s=0
+    }
+   
     if(r>100 | c>100){alert("numero de linhas ou colunas excede 100");return}
     if(prob<0 | prob>101){alert("probabilidade não valida");return }
     return [r, c,prob]
@@ -60,7 +66,7 @@ function creat_map_aux() {
 
 //up is working
 function creat_map(r, c,prob,mapa,s = 1) {
-    bomb_table = new Array();id_table = new Array();
+    bomb_table = new Array();id_table = new Array();f_click=0
     
     let oldtable = document.querySelector(".mapa");
     if (s == 1) { r = creat_map_aux()[0]; c = creat_map_aux()[1];prob=creat_map_aux()[2] };
@@ -106,7 +112,6 @@ function creat_map(r, c,prob,mapa,s = 1) {
                 cell.setAttribute("onclick", "change_cell(this.id)")
                 cell.setAttribute("oncontextmenu","flag(this.id)")
     
-    
                 if (Math.floor(Math.random() * 101) < prob) {
                     bomb_table.push({ i: i, j: j,m:1 });
                 }
@@ -129,24 +134,27 @@ function multiplayer(l=0){
 }
 
 function change_cell(id,g=1) {
-    
     let id_c = id
     const cell_tochange = document.getElementById(id_c);
     if (cell_tochange==null){return}
     if (cell_tochange.classList.contains("flag")){return }
     if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado");return }
     if (win==1){alert("Ganhaste")}
-    win-=1
 
     split_id = id_c.split("_");
     let selected_cell = [parseInt(split_id[0],10), parseInt(split_id[1],10),parseInt(split_id[2],10)];
     for (let it = 0; it < bomb_table.length; it++) {
         if (bomb_table[it].i == selected_cell[0] && bomb_table[it].j == selected_cell[1] && bomb_table[it].m==selected_cell[2]){
+            if (f_click==0){
+                creat_map(r,c)
+                change_cell(id)
+                return
+            }
             cell_tochange.classList.replace("hidden_cell","bomb")
             if(selected_cell[2]==1){return alert("jogador 2 perdeu"),multiplayer(l=1)}
             if(selected_cell[2]==0){return alert("jogador 1 perdeu"),creat_map(r,c)}
         }
-
+        f_click=1
         // if (bomb_table[it].i == selected_cell[0] && bomb_table[it].j == selected_cell[1]) {
         //     cell_tochange.classList.replace("hidden_cell","bomb");
         //     if(g==1){alert("clicked a bomb try again!");return creat_map(r,c)}
@@ -187,7 +195,11 @@ function change_cell(id,g=1) {
     if (bomb_count == 6) { cell_tochange.classList.replace("hidden_cell","bomb6"); }
     if (bomb_count == 7) { cell_tochange.classList.replace("hidden_cell","bomb7"); }
     if (bomb_count == 8) { cell_tochange.classList.replace("hidden_cell","bomb8"); }
-    return cell_tochange.classList[0]=0
+    win_condition=win_condition+1
+
+    if(document.getElementsByClassName("hidden_cell").length==bomb_table.length){alert("Parabens Ganhas-te");}//creat_map(r,c,prob,s)}
+    document.getElementById("bomb_count").innerHTML=`Número de Bombas:${bomb_table.length}` 
+    return //cell_tochange.classList[0]=0
 }
 
 function clear_map(mapa) {
@@ -231,6 +243,7 @@ function flag(id){
     let id_c = id
     var cell_tochange = document.getElementById(id_c);
     cell_tochange.classList.toggle("flag")
+    document.getElementById("bomb_count_flag").innerHTML=`Bombas com bandeira:${bomb_table.length-document.getElementsByClassName("flag").length}`
     // if (cell_tochange.classList.contains("flag")){cell_tochange.classList.remove("flag")}
     // if (cell_tochange.classList.contains("")){cell_tochange.classList.add("flag")}
 }
