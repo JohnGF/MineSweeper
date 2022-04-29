@@ -289,3 +289,14 @@ text-align: center;
     background-image: var(--bomb8) !important;
     background-size: cover; 
 }
+#board_stat {
+	width: 300px;
+	text-align: center;
+	/* border: solid; */
+	/* display: flex; */
+	/* align-items: center; */
+	/* justify-content: center; */
+	margin: auto;
+	margin-bottom: 10px;
+	height: 50px;
+}
