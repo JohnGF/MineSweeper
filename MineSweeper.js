@@ -7,12 +7,14 @@ let titlo = document.querySelector("#titulo_jogo");
 let td = document.createElement("td");
 
 let score = document.querySelector("#score");
+let timer = document.querySelector("#timer");
 let bomb_table = new Array();
 let id_table = new Array();
 //multiplayer
 let bomb_table_1 = new Array();
 let id_table_1 = new Array();
 let multi=0;
+
 //
 var win = 0
 
@@ -24,6 +26,9 @@ let SList=new Array();
 let f_click=0
 let win_condition=0
 let s=0
+let sec=0
+let id_timer=0
+let timer_star = document.createElement("div")
 table.addEventListener('contextmenu', e => {
   e.preventDefault();
 });
@@ -51,6 +56,7 @@ function creat_map_aux() {
     localStorage.setItem("row", document.querySelector("#r").value);
     localStorage.setItem("col", document.querySelector("#c").value);
     localStorage.setItem("prob", document.querySelector("#prob").value);
+    //localStorage.setItem("prob", document.querySelector("#prob").value); por tempo
     r = localStorage.getItem("row");
     c = localStorage.getItem("col");
     let prob = localStorage.getItem("prob");
@@ -66,11 +72,13 @@ function creat_map_aux() {
 
 //up is working
 function creat_map(r, c,prob,mapa,s = 1) {
-    bomb_table = new Array();id_table = new Array();f_click=0
+    
+    bomb_table = new Array();id_table = new Array();f_click=0;sec=0;clearInterval(id_timer);timer.innerHTML=`Tempo:0`;
     
     let oldtable = document.querySelector(".mapa");
     if (s == 1) { r = creat_map_aux()[0]; c = creat_map_aux()[1];prob=creat_map_aux()[2] };
     if (oldtable.innerHTML !="") { oldtable.innerHTML = ""; };
+    table.appendChild(timer_star)
 
     //console.log(`${r},${c}`)
 
@@ -126,7 +134,6 @@ function creat_map(r, c,prob,mapa,s = 1) {
 function multiplayer(l=0){
     multi=1
     creat_map(r, c,prob,s = 1)
-
     document.getElementById("game_container").classList.add("game_container1")
 
     if (l==0){
@@ -134,13 +141,15 @@ function multiplayer(l=0){
 }
 
 function change_cell(id,g=1) {
+    if (f_click==0){id_timer=setInterval(timer_f,1000);} //conta tempo
+    //if (f_click==0){const id_timer=setInterval(coundown(time),time*1000)} //cronometra
     let id_c = id
     const cell_tochange = document.getElementById(id_c);
     if (cell_tochange==null){return}
     if (cell_tochange.classList.contains("flag")){return }
     if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado");return }
     if (win==1){alert("Ganhaste")}
-
+    
     split_id = id_c.split("_");
     let selected_cell = [parseInt(split_id[0],10), parseInt(split_id[1],10),parseInt(split_id[2],10)];
     for (let it = 0; it < bomb_table.length; it++) {
@@ -151,16 +160,15 @@ function change_cell(id,g=1) {
                 return
             }
             cell_tochange.classList.replace("hidden_cell","bomb")
+            clearInterval(id_timer);
             if(selected_cell[2]==1){return alert("jogador 2 perdeu"),multiplayer(l=1)}
             if(selected_cell[2]==0){return alert("jogador 1 perdeu"),creat_map(r,c)}
         }
-        f_click=1
-        // if (bomb_table[it].i == selected_cell[0] && bomb_table[it].j == selected_cell[1]) {
-        //     cell_tochange.classList.replace("hidden_cell","bomb");
-        //     if(g==1){alert("clicked a bomb try again!");return creat_map(r,c)}
-        //     return
-        // }
+        
+
     }
+
+    f_click=1
     bomb_count = 0;
     if(selected_cell[2]==0){
     for (let itb = 0; itb < bomb_table.length; itb++) {
@@ -197,9 +205,17 @@ function change_cell(id,g=1) {
     if (bomb_count == 8) { cell_tochange.classList.replace("hidden_cell","bomb8"); }
     win_condition=win_condition+1
 
-    if(document.getElementsByClassName("hidden_cell").length==bomb_table.length){alert("Parabens Ganhas-te");}//creat_map(r,c,prob,s)}
+    if(document.getElementsByClassName("hidden_cell").length==bomb_table.length){alert("Parabéns GANHAS-TE");}//creat_map(r,c,prob,s)}
     document.getElementById("bomb_count").innerHTML=`Número de Bombas:${bomb_table.length}` 
     return //cell_tochange.classList[0]=0
+}
+function timer_f(){
+    sec=sec+1
+    timer.innerHTML=`Tempo:${sec}`
+}
+function coundown(sec){
+    sec=sec-1
+    timer.innerHTML=`Tempo:${sec}`
 }
 
 function clear_map(mapa) {
@@ -207,7 +223,6 @@ function clear_map(mapa) {
     oldtable.innerHTML = "";
 }
 function update_score() {
-
     currentDate.getSeconds();
     value = parseInt(score.innerHTML);
     score.innerHTML = value + 50;
@@ -217,6 +232,27 @@ function update_score_ticker() {
     if (old_time==0){old_time=currentDate.getSeconds()}
     if(oldtime-currentDate.getSeconds()==1){old_time=currentDate.getSeconds();time-=1}
     score.innerHTML=time
+}
+
+
+function flag(id){
+    let id_c = id
+    var cell_tochange = document.getElementById(id_c);
+    cell_tochange.classList.toggle("flag")
+    document.getElementById("bomb_count_flag").innerHTML=`Bombas com bandeira:${bomb_table.length-document.getElementsByClassName("flag").length}`
+    // if (cell_tochange.classList.contains("flag")){cell_tochange.classList.remove("flag")}
+    // if (cell_tochange.classList.contains("")){cell_tochange.classList.add("flag")}
+}
+function setting_menu(){
+    document.getElementById("container_generator").classList.toggle("hidden");
+}
+function reveal_map(){
+    for (let i=0; i<id_table.length;i++){
+        //console.log(`${id_table[i].i}_${id_table[i].j}`)
+        change_cell(`${id_table[i].i}_${id_table[i].j}_${id_table[i].m}`)
+        clearInterval(id_timer)
+    }
+
 }
 
 
@@ -239,23 +275,5 @@ function update_score_ticker() {
 //     }, 1000);
 // }
 
-function flag(id){
-    let id_c = id
-    var cell_tochange = document.getElementById(id_c);
-    cell_tochange.classList.toggle("flag")
-    document.getElementById("bomb_count_flag").innerHTML=`Bombas com bandeira:${bomb_table.length-document.getElementsByClassName("flag").length}`
-    // if (cell_tochange.classList.contains("flag")){cell_tochange.classList.remove("flag")}
-    // if (cell_tochange.classList.contains("")){cell_tochange.classList.add("flag")}
-}
-function setting_menu(){
-    document.getElementById("container_generator").classList.toggle("hidden");
-}
-function reveal_map(){
-    for (let i=0; i<id_table.length;i++){
-        //console.log(`${id_table[i].i}_${id_table[i].j}`)
-        change_cell(`${id_table[i].i}_${id_table[i].j}_${id_table[i].m}`)
-    }
-
-}
 // while (true){update_score_ticker(),console.log("running")
 // if(time==0){break}}
