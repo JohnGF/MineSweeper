@@ -223,8 +223,11 @@ text-align: center;
     background-size: cover; 
 }
 .flag{
-    
     background-image: url(resources/radar.png) !important;
+    background-size: cover;
+}
+.flag_question{
+    background-image: url(resources/radar_question.png) !important;
     background-size: cover;
 }
 #controls_legend{
