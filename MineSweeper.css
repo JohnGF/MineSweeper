@@ -25,6 +25,10 @@
     --bomb4:  rgb(0, 87, 0);
     --bomb5:yellow ;
 }
+:focus {
+    outline: 3px solid red;   
+}
+
 
 .table_score{
     margin-left: auto;
@@ -299,4 +303,7 @@ text-align: center;
 	margin: auto;
 	margin-bottom: 10px;
 	height: 50px;
+}
+.selec_keyboard{
+    border: red solid;
 }

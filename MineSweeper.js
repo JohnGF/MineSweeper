@@ -2,10 +2,10 @@ let table = document.querySelector("table.mapa");
 let multi_table= document.querySelector("table.mapa1");
 let map_generator = document.querySelector(".map_generator");
 
+//board generation
 let titlo = document.querySelector("#titulo_jogo");
 //let tr= document.createElement("tr");
 let td = document.createElement("td");
-
 let score = document.querySelector("#score");
 let timer = document.querySelector("#timer");
 let bomb_table = new Array();
@@ -15,7 +15,7 @@ let bomb_table_1 = new Array();
 let id_table_1 = new Array();
 let multi=0;
 
-//
+//timer
 var win = 0
 
 let old_time=0
@@ -29,6 +29,12 @@ let s=0
 let sec=0
 let id_timer=0
 let timer_star = document.createElement("div")
+//keyboard
+let x=0
+let y=0
+let mapa=0
+
+
 table.addEventListener('contextmenu', e => {
   e.preventDefault();
 });
@@ -73,7 +79,7 @@ function creat_map_aux() {
 //up is working
 function creat_map(r, c,prob,mapa,s = 1) {
     
-    bomb_table = new Array();id_table = new Array();f_click=0;sec=0;clearInterval(id_timer);timer.innerHTML=`Tempo:0`;
+    bomb_table = new Array();id_table = new Array();f_click=0;sec=0;clearInterval(id_timer);timer.innerHTML=`Tempo:0`;x=0;y=0;
     
     let oldtable = document.querySelector(".mapa");
     if (s == 1) { r = creat_map_aux()[0]; c = creat_map_aux()[1];prob=creat_map_aux()[2] };
@@ -238,6 +244,7 @@ function update_score_ticker() {
 function flag(id){
     let id_c = id
     var cell_tochange = document.getElementById(id_c);
+    if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado");return }
     cell_tochange.classList.toggle("flag")
     document.getElementById("bomb_count_flag").innerHTML=`Bombas com bandeira:${bomb_table.length-document.getElementsByClassName("flag").length}`
     // if (cell_tochange.classList.contains("flag")){cell_tochange.classList.remove("flag")}
@@ -252,9 +259,64 @@ function reveal_map(){
         change_cell(`${id_table[i].i}_${id_table[i].j}_${id_table[i].m}`)
         clearInterval(id_timer)
     }
-
 }
+//keyboard input
+document.addEventListener('keydown', (event) => {
+    const keyName = event.key;
 
+    let id_k =`${x}_${y}_${mapa}`
+    console.log(keyName)
+    if(document.getElementById(id_k).classList[1]=="selec_keyboard")
+    {document.getElementById(id_k).classList.remove("selec_keyboard")}
+    else{document.getElementById(id_k).classList.add("selec_keyboard")}
+    console.log(id_k)
+    if (keyName === 'ArrowDown') {
+        if (x<r){x+=1}
+        if(document.getElementById(id_k).classList[1]=="selec_keyboard")
+        {document.getElementById(id_k).classList.remove("selec_keyboard")}
+        id_k =`${x}_${y}_${mapa}`
+        document.getElementById(id_k).classList.add("selec_keyboard")
+        return console.log(id_k);
+      }
+    if (keyName === 'ArrowUp') {
+        if (x>0){x-=1}
+        if(document.getElementById(id_k).classList[1]=="selec_keyboard")
+        {document.getElementById(id_k).classList.remove("selec_keyboard")}
+
+        id_k =`${x}_${y}_${mapa}`
+        document.getElementById(id_k).classList.add("selec_keyboard")
+        return console.log(id_k);
+    }
+    if (keyName === 'ArrowLeft') {
+        if (y>0){y-=1}
+        if(document.getElementById(id_k).classList[1]=="selec_keyboard")
+        {document.getElementById(id_k).classList.remove("selec_keyboard")}
+
+        id_k =`${x}_${y}_${mapa}`
+        document.getElementById(id_k).classList.add("selec_keyboard")
+        return console.log(id_k);
+    }
+    if (keyName === 'ArrowRight') {
+    
+        if (y<c){y+=1}
+        if(document.getElementById(id_k).classList[1]=="selec_keyboard")
+        {document.getElementById(id_k).classList.remove("selec_keyboard")}
+        id_k =`${x}_${y}_${mapa}`
+        document.getElementById(id_k).classList.add("selec_keyboard")
+        return console.log(id_k);
+    }
+    if (event.ctrlKey) {
+        if (keyName === ' ') {
+            flag(id_k)
+        }
+    if (keyName === ' ') {
+            change_cell(id_k)
+
+
+
+    }
+    }
+})
 
 // function startTimer(duration, display) {
 //     document.getElementById("mapa").removeEventListener("click", startTimer);
