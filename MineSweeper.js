@@ -35,6 +35,7 @@ let y=0
 let mapa=0
 //flag
 let selector=0
+let idc=0
 
 table.addEventListener('contextmenu', e => {
   e.preventDefault();
@@ -245,6 +246,8 @@ function update_score_ticker() {
 
 function flag(id){
     let id_c = id
+    if(idc!=id){idc=id;selector=0}
+
 
 
     var cell_tochange = document.getElementById(id_c);

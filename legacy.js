@@ -152,3 +152,8 @@ function flag(id){
     // if(cell_tochange.classList[1]=="flag"){cell_tochange.classList.remove("flag");cell_tochange.classList.add("flag_question")}
     // if (cell_tochange.classList[0]=="hidden_cell"){cell_tochange.classList.add("flag")}
 }
+
+if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado") }
+if (cell_tochange.classList.contains("flag_question")){cell_tochange.classList.toggle("flag_question")}
+if (cell_tochange.classList.contains("flag")){cell_tochange.classList.toggle("flag"),cell_tochange.classList.toggle("flag_question");selector=2}
+if (cell_tochange.classList.length==1){cell_tochange.classList.toggle("flag")} 
