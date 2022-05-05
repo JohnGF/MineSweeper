@@ -40,6 +40,19 @@ let idc=0
 table.addEventListener('contextmenu', e => {
   e.preventDefault();
 });
+function login(){
+    let user=document.getElementById("user") 
+    let pass =document.getElementById("pass")
+    let form =document.getElementById("form")
+    localStorage.setItem("user",user.value)
+    localStorage.setItem("pass",pass.value)
+    let welcome=document.createElement("div")
+    welcome.classList.add("welcome")
+    welcome.innerHTML=`Bem vindo ${user.value}`
+    form.innerHTML=""
+    form.append(welcome )
+
+}
 function first_click(){
 
 };

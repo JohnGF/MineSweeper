@@ -25,6 +25,10 @@
     --bomb4:  rgb(0, 87, 0);
     --bomb5:yellow ;
 }
+.welcome {
+	text-align: center;
+	font-size: Larger;
+}
 :focus {
     outline: 3px solid red;   
 }
