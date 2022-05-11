@@ -36,6 +36,13 @@ let mapa=0
 //flag
 let selector=0
 let idc=0
+//present log in
+user_v=String()
+//Special Game mode
+let life=Number();
+let special=1;
+let b=0 //block play
+
 
 table.addEventListener('contextmenu', e => {
   e.preventDefault();
@@ -48,9 +55,11 @@ function login(){
     localStorage.setItem("pass",pass.value)
     let welcome=document.createElement("div")
     welcome.classList.add("welcome")
+    user_v=user.value
     welcome.innerHTML=`Bem vindo ${user.value}`
     form.innerHTML=""
     form.append(welcome )
+    
 
 }
 function first_click(){
@@ -94,7 +103,7 @@ function creat_map_aux() {
 //up is working
 function creat_map(r, c,prob,mapa,s = 1) {
     
-    bomb_table = new Array();id_table = new Array();f_click=0;sec=0;clearInterval(id_timer);timer.innerHTML=`Tempo:0`;x=0;y=0;
+    bomb_table = new Array();id_table = new Array();f_click=0;sec=0;clearInterval(id_timer);timer.innerHTML=`Tempo:0`;x=0;y=0; let random=0,b=0
     
     let oldtable = document.querySelector(".mapa");
     if (s == 1) { r = creat_map_aux()[0]; c = creat_map_aux()[1];prob=creat_map_aux()[2] };
@@ -105,6 +114,34 @@ function creat_map(r, c,prob,mapa,s = 1) {
 
 
     clear_map(".mapa") 
+    if(special==1){
+        life=5
+    for (let i = 0; i < r; i++) {
+        let row = table.insertRow(i);
+        for (let j = 0; j < c; j++) {
+            let cell = row.insertCell(j);
+            let id_cell = `${i}_${j}_0`
+            cell.setAttribute("id", id_cell);
+            cell.classList.add("hidden_cell")
+
+            cell.setAttribute("onclick", "change_cell(this.id)")
+            cell.setAttribute("oncontextmenu","flag(this.id)")
+
+            if (Math.floor(Math.random() * 101) < prob) {
+                random=(Math.floor(Math.random() * 101))
+
+                if(0<random && random<25){bomb_table.push({ i: i, j: j,m:0,p:0 })}
+                else if(25<random && random<50){bomb_table.push({ i: i, j: j,m:0,p:1 })}
+                else if(50<random && random<75){bomb_table.push({ i: i, j: j,m:0,p:2 })}
+                else{bomb_table.push({ i: i, j: j,m:0,p:3 })}
+                //bomb_table.push({ i: i, j: j,m:0 });
+            }
+            else(id_table.push({ i: i, j: j,m:0 })); 
+
+        };
+    };
+}
+else{
     for (let i = 0; i < r; i++) {
         let row = table.insertRow(i);
         for (let j = 0; j < c; j++) {
@@ -123,6 +160,8 @@ function creat_map(r, c,prob,mapa,s = 1) {
 
         };
     };
+
+}
 
     //----
     win = id_table.lengt
@@ -161,7 +200,8 @@ function multiplayer(l=0){
         creat_map(r, c,prob,s = 1)}
 }
 
-function change_cell(id,g=1) {
+function change_cell(id) {
+    if(b==1){return}
     if (f_click==0){id_timer=setInterval(timer_f,1000);} //conta tempo
     //if (f_click==0){const id_timer=setInterval(coundown(time),time*1000)} //cronometra
     let id_c = id
@@ -169,7 +209,7 @@ function change_cell(id,g=1) {
     if (cell_tochange==null){return}
     if (cell_tochange.classList.contains("flag")){return }
     if (cell_tochange.classList.contains("flag_question")){return }
-    if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado");return }
+    if (cell_tochange.classList[0]!="hidden_cell"){return }
     if (win==1){alert("Ganhaste")}
     
     split_id = id_c.split("_");
@@ -181,13 +221,23 @@ function change_cell(id,g=1) {
                 change_cell(id)
                 return
             }
+            else{
+                if(special==1){
+                    if(bomb_table[it].p==0){cell_tochange.classList.replace("hidden_cell","bomb-0"),life=life-1}
+                    else if(bomb_table[it].p==1){cell_tochange.classList.replace("hidden_cell","bomb-1"),life=life-2}
+                    else if(bomb_table[it].p==2){cell_tochange.classList.replace("hidden_cell","bomb-2"),life=life-3}
+                    else if(bomb_table[it].p==3){cell_tochange.classList.replace("hidden_cell","bomb-3"),life=life-4}
+                    if(life<=0){b=1,alert("perdeste")}
+                }
+                else{cell_tochange.classList.replace("hidden_cell","bomb"),b=1}
+            
+            if(special==0){
             cell_tochange.classList.replace("hidden_cell","bomb")
             clearInterval(id_timer);
             if(selected_cell[2]==1){return alert("jogador 2 perdeu"),multiplayer(l=1)}
-            if(selected_cell[2]==0){return alert("jogador 1 perdeu"),creat_map(r,c)}
-        }
+            if(selected_cell[2]==0){return alert("jogador 1 perdeu"),creat_map(r,c)}}
+        }}
         
-
     }
 
     f_click=1
@@ -227,7 +277,7 @@ function change_cell(id,g=1) {
     if (bomb_count == 8) { cell_tochange.classList.replace("hidden_cell","bomb8"); }
     win_condition=win_condition+1
 
-    if(document.getElementsByClassName("hidden_cell").length==bomb_table.length){alert("Parabéns GANHAS-TE");}//creat_map(r,c,prob,s)}
+    if(document.getElementsByClassName("hidden_cell").length==bomb_table.length){alert("Parabéns GANHAS-TE");localStorage.setItem("score",`${sec},${user_v}`)}//creat_map(r,c,prob,s)}
     document.getElementById("bomb_count").innerHTML=`Número de Bombas:${bomb_table.length}` 
     return //cell_tochange.classList[0]=0
 }
@@ -264,7 +314,7 @@ function flag(id){
 
 
     var cell_tochange = document.getElementById(id_c);
-    if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado");return }
+    if (cell_tochange.classList[0]!="hidden_cell"){return }
 
     if (selector==2){cell_tochange.classList.toggle("flag_question");selector=3}
     if (selector==1){cell_tochange.classList.toggle("flag"),cell_tochange.classList.toggle("flag_question");selector=2}
@@ -276,7 +326,7 @@ function flag(id){
 function flag_q(id){
     let id_c = id
     var cell_tochange = document.getElementById(id_c);
-    if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado");return }
+    if (cell_tochange.classList[0]!="hidden_cell"){return }
     cell_tochange.classList.toggle("flag_question")
 }
 function setting_menu(){
@@ -295,46 +345,47 @@ document.addEventListener('keydown', (event) => {
     
     let id_k =`${x}_${y}_${mapa}`
     let cell_tochange=document.getElementById(id_k)
-    console.log(keyName)
+    //console.log(keyName)
     if(cell_tochange.classList[1]!="selec_keyboard"){cell_tochange.classList.toggle("selec_keyboard")}
-    console.log(id_k)
+    //console.log(id_k)
     if (keyName === 'ArrowDown') {
         if (x<r){x+=1}
         cell_tochange.classList.toggle("selec_keyboard")
         id_k =`${x}_${y}_${mapa}`
         cell_tochange=document.getElementById(id_k)
         cell_tochange.classList.toggle("selec_keyboard")
-        return console.log(id_k);
+        //return console.log(id_k);
       }
-    if (keyName === 'ArrowUp') {
+    else if (keyName === 'ArrowUp') {
         if (x>0){x-=1}
         cell_tochange.classList.toggle("selec_keyboard")
         id_k =`${x}_${y}_${mapa}`
         cell_tochange=document.getElementById(id_k)
         cell_tochange.classList.toggle("selec_keyboard")
-        return console.log(id_k);
+        //return console.log(id_k);
     }
-    if (keyName === 'ArrowLeft') {
+    else if (keyName === 'ArrowLeft') {
         if (y>0){y-=1}
         cell_tochange.classList.toggle("selec_keyboard")
         id_k =`${x}_${y}_${mapa}`
         cell_tochange=document.getElementById(id_k)
         cell_tochange.classList.toggle("selec_keyboard")
-        return console.log(id_k);
+        //return console.log(id_k);
     }
-    if (keyName === 'ArrowRight') {
+    else if (keyName === 'ArrowRight') {
     
         if (y<c){y+=1}
         cell_tochange.classList.toggle("selec_keyboard")
         id_k =`${x}_${y}_${mapa}`
         cell_tochange=document.getElementById(id_k)
         cell_tochange.classList.toggle("selec_keyboard")
-        return console.log(id_k);
+        //return console.log(id_k);
     }
-    if(keyName==="Control"){
+    else if(keyName==="Control"){
         flag(id_k)
     }
-    if (keyName === ' ') {
+    else if (keyName === ' ') {
         change_cell(id_k)
 }   
+else{if(cell_tochange.classList[1]=="selec_keyboard"){cell_tochange.classList.toggle("selec_keyboard")}}
 })

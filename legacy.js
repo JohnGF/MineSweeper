@@ -157,3 +157,37 @@ if (cell_tochange.classList[0]!="hidden_cell"){ console.log("ja foi clicado") }
 if (cell_tochange.classList.contains("flag_question")){cell_tochange.classList.toggle("flag_question")}
 if (cell_tochange.classList.contains("flag")){cell_tochange.classList.toggle("flag"),cell_tochange.classList.toggle("flag_question");selector=2}
 if (cell_tochange.classList.length==1){cell_tochange.classList.toggle("flag")} 
+
+for (let i = 0; i < r; i++) {
+    let row = table.insertRow(i);
+    for (let j = 0; j < c; j++) {
+        
+        let cell = row.insertCell(j);
+        let id_cell = `${i}_${j}_0`
+        cell.setAttribute("id", id_cell);
+        cell.classList.add("hidden_cell")
+
+        cell.setAttribute("onclick", "change_cell(this.id)")
+        cell.setAttribute("oncontextmenu","flag(this.id)")
+
+        if (Math.floor(Math.random() * 101) < prob) {
+            bomb_table.push({ i: i, j: j,m:0 });
+        }
+        else(id_table.push({ i: i, j: j,m:0 })); 
+
+    };
+};
+if(special==1){
+    let random=Math.floor(Math.random() * 101)
+    if(0<random<25){t=0}
+    else if(25<random<50){t=1}
+    else if(50<random<75){t=2}
+    else if(75<random<100){t=3}}
+
+    if(special=1){
+        let b_type=bomb_table[it].t
+        if (b_type==0){console.log("normal bomb"),cell_tochange.classList.replace("hidden_cell","bomb")}
+        if (b_type==1){console.log("bomb-1"),cell_tochange.classList.replace("hidden_cell","bomb-1")}
+        if (b_type==2){console.log("bomb-2"),cell_tochange.classList.replace("hidden_cell","bomb-2")}
+        if (b_type==3){console.log("bomb-3"),cell_tochange.classList.replace("hidden_cell","bomb-3")}
+    }

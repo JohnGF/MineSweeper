@@ -1,0 +1,38 @@
+https://code-boxx.com/pass-variables-between-pages-javascript/
+<script>
+    function store () {
+      // (A) VARIABLES TO PASS
+      var first = "Foo Bar",
+          second = ["Hello", "World"];
+     
+      // (B) URL PARAMETERS + STORE INTO COOKIE
+      // * WORKS, BUT NOT RECOMMENDED
+      var params = new URLSearchParams();
+      params.append("first", first);
+      params.append("second", JSON.stringify(second));
+      document.cookie = "pass=" + params.toString();
+     
+      // (C) REDIRECT
+      location.href = "cookie.html";
+      // window.open("4b-cookie.html");
+    }
+    </script>
+
+<script>
+    function get () {
+      // (A) GET BACK PASS VARS
+      var passvars = document.cookie
+        .split("; ")
+        .find(row => row.startsWith("pass"))
+        .substring(5);
+     
+      // (B) PARSE BACK
+      var params = new URLSearchParams(passvars),
+          first = params.get("first"),
+          second = JSON.parse(params.get("second"));
+     
+      // (C) IT WORKS!
+      console.log(first);  // Foo Bar
+      console.log(second); // ["Hello", "World"]
+    }
+    </script>
