@@ -10,7 +10,7 @@
         <link rel="shortcut icon" href="resources/favicon.png">
         <title>MineSweeper</title>
     </head>
-<body id="body">
+<body id="body" onload='update_table()'>
     <header>
         <div class="menus">
             <ul> 
@@ -45,6 +45,7 @@
         </tr>
 
     </table>
+    <button onclick="update_table()">update</button>
     <script src="MineSweeper.js"></script>
 </body>
 </html>

@@ -40,13 +40,19 @@ let idc=0
 user_v=String()
 //Special Game mode
 let life=Number();
-let special=1;
+let special=0;
 let b=0 //block play
-
-
+let hist_jogos=new Array()
+function special_togle(){
+    if (special==0){special=1;  return}
+    else {special=0; return}
+    
+}
+if (table!=null){
 table.addEventListener('contextmenu', e => {
   e.preventDefault();
-});
+})}
+
 function login(){
     let user=document.getElementById("user") 
     let pass =document.getElementById("pass")
@@ -227,15 +233,19 @@ function change_cell(id) {
                     else if(bomb_table[it].p==1){cell_tochange.classList.replace("hidden_cell","bomb-1"),life=life-2}
                     else if(bomb_table[it].p==2){cell_tochange.classList.replace("hidden_cell","bomb-2"),life=life-3}
                     else if(bomb_table[it].p==3){cell_tochange.classList.replace("hidden_cell","bomb-3"),life=life-4}
-                    if(life<=0){b=1,alert("perdeste")}
+                    if(life<=0){b=1;alert("perdeste");hist_jogos.push({user:localStorage.getItem("user"),score:sec,modo:"Diferenciado"})}
                 }
                 else{cell_tochange.classList.replace("hidden_cell","bomb"),b=1}
             
             if(special==0){
+                hist_jogos.push({user:localStorage.getItem("user"),score:sec,modo:"classic"})
             cell_tochange.classList.replace("hidden_cell","bomb")
             clearInterval(id_timer);
-            if(selected_cell[2]==1){return alert("jogador 2 perdeu"),multiplayer(l=1)}
-            if(selected_cell[2]==0){return alert("jogador 1 perdeu"),creat_map(r,c)}}
+            if (multi==1){
+            
+            if(selected_cell[2]==1){return alert("jogador 2 perdeu"),multiplayer(l=1),hist_jogos.push({user:"user1",score:sec,modo:"multiplayer"})}
+            if(selected_cell[2]==0){return alert("jogador 1 perdeu"),creat_map(r,c),hist_jogos.push({user:"user2",score:sec,modo:"multiplayer"})}}
+        }
         }}
         
     }
@@ -389,3 +399,42 @@ document.addEventListener('keydown', (event) => {
 }   
 else{if(cell_tochange.classList[1]=="selec_keyboard"){cell_tochange.classList.toggle("selec_keyboard")}}
 })
+function update_table(){
+
+
+        let tabelaAntiga = document.getElementsByClassName("table_score");
+      
+
+        let tabelaNova = document.createElement("table");
+        tabelaNova.setAttribute("class", "table_score");
+
+        let linhaTabela = document.createElement("tr");
+        linhaTabela.innerHTML = "<th>#</th>" +
+                                "<th>Nome</th>" +
+                                "<th>Score</th>" +
+                                "<th>Modo de Jogo</th>"
+
+        tabelaNova.appendChild(linhaTabela);
+        //user=getItem("user")
+        let numeroEncomenda = 1;
+        for (let hist_jogo of hist_jogos) {
+      
+          // Uma linha de dados por cada encomenda no histórico.
+          linhaTabela = document.createElement("tr");
+          linhaTabela.innerHTML = "<td>" + numeroEncomenda + "</td>" +
+                                  "<td>" + hist_jogo.user + "</td>" +
+                                  "<td>" + hist_jogo.score + "</td>" +
+                                  "<td>" + hist_jogo.modo + "</td>" +
+
+          tabelaNova.appendChild(linhaTabela);
+          numeroEncomenda++;
+        }
+      
+        // Substitui a tabela antiga pela nova.
+        tabelaAntiga.parentNode.replaceChild(tabelaNova, tabelaAntiga);
+      
+}
+
+function delete_table(){
+    document.getElementsByClassName(table_score).innerHTML=""
+}
