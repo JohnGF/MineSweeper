@@ -449,7 +449,7 @@ function update_table() {
         linhaTabela.innerHTML = "<td>" + numeroEncomenda + "</td>" +
             "<td>" + hist_jogo.user + "</td>" +
             "<td>" + hist_jogo.score + "</td>" +
-            "<td>" + hist_jogo.modo + "</td>" +
+            "<td>" + hist_jogo.modo + "</td>" 
 
             tabelaNova.appendChild(linhaTabela);
         numeroEncomenda++;
