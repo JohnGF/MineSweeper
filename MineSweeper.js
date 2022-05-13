@@ -252,6 +252,7 @@ function change_cell(id) {
                     else if (bomb_table[it].p == 2) { cell_tochange.classList.replace("hidden_cell", "bomb-2"), life = life - 3 }
                     else if (bomb_table[it].p == 3) { cell_tochange.classList.replace("hidden_cell", "bomb-3"), life = life - 4 }
                     document.getElementById("life_counter").innerHTML=`Vidas ${life}`
+                    clearInterval(id_timer)
                     if (life <= 0) { b = 1; alert("perdeste"); hist_jogos.push({ user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" });hist_jogos.push({ user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
                 }
                 else { cell_tochange.classList.replace("hidden_cell", "bomb"), b = 1 }
@@ -266,7 +267,7 @@ function change_cell(id) {
                         if (selected_cell[2] == 0) { return alert("jogador 1 perdeu"), hist_jogos.push({ user: "user2", score: sec, modo: "multiplayer" }),hist_jogos.push({ user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) ,creat_map(r, c)}
                     }
                     
-                    else{hist_jogos.push({ user: localStorage.getItem("user"), score: sec, modo: "classic" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos))}
+                    else{clearInterval(id_timer),hist_jogos.push({ user: localStorage.getItem("user"), score: sec, modo: "classic" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos))}
                 }
             }
         }
@@ -424,9 +425,8 @@ document.addEventListener('keydown', (event) => {
     }
     else { if (cell_tochange.classList[1] == "selec_keyboard") { cell_tochange.classList.toggle("selec_keyboard") } }
 })
-function update_table() {
-
-
+function update_table(lista) {
+    lista=lista
     let tabelaAntiga = document.getElementsByClassName("table_score")[0];
 
 
@@ -442,7 +442,7 @@ function update_table() {
     tabelaNova.appendChild(linhaTabela);
     //user=getItem("user")
     let numeroEncomenda = 1;
-    for (let hist_jogo of hist_jogos) {
+    for (let hist_jogo of lista) {
 
         // Uma linha de dados por cada encomenda no histórico.
         linhaTabela = document.createElement("tr");
@@ -478,4 +478,33 @@ function check_login(){
         form.append(welcome)
         form.append(btt)
     }
+}
+function sort_list_score(){
+    hist_jogos.sort((a,b)=>{
+        if(a.score<b.score){
+            return 1
+        }
+        else{return -1}})
+// sort needs to have a 0< a <0 and a 0 when its a tie
+}
+
+function sort_list_user(){
+    user=localStorage.getItem("user")
+    hist_jogos.sort((a,b)=>{
+        if(a.user==b.user){
+            return 1
+        }
+        else{return -1}})
+}
+
+function slice_list_user(){
+    let user_list=new Array()
+    user=localStorage.getItem("user")
+    for (let jogo of lista){
+        if (jogo.user==user){user_list.push}
+    }
+    localStorage.setItem("user_list",JSON.stringify(user_list))
+}
+function sort_list_score_10(){
+    sort_list_score()
 }
