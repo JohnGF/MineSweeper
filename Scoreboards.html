@@ -10,12 +10,23 @@
         <link rel="shortcut icon" href="resources/favicon.png">
         <title>MineSweeper</title>
     </head>
-<body id="body" onload='update_table()'>
+<body id="body" onload='update_table(hist_jogos)'>
     <header>
         <div class="menus">
             <ul> 
                 <li><a href="index.html"><img class="fitLogo" src="resources/logo1.jpg" alt="Logo da Aplicação"/></a></li>
-                <li><a href="Scoreboards.html"><b>Scoreboards</b></a></li>
+                <li>    <div  class="dropdown">
+                    <div class="dropbtn">Scoreboard</div>
+                    <div id="sort_btn" class="dropdown-content">
+                    <button onclick="update_table(hist_jogos)">Update</button>
+                    <button onclick="slice_list_user(hist_jogos)">Scores Utilizador</button>
+                    <button onclick="slice_list_modo(hist_jogos,'classic')">Scores Classico</button>
+                    <button onclick="slice_list_modo(hist_jogos,'Diferenciado')">Scores Diferenciado</button>
+                    <button onclick="sort_list_score(hist_jogos)">Ordena por pontuação</button>
+                    <button onclick="delete_table()">Elimina dados</button>
+                    <script src="MineSweeper.js"></script>
+                    </div>
+                </div></li>
                 <li><a href="login.html" class="login"> <b>Login</b></a></li>
                 <li><a href="Historia.html"><b>Historia</b></a></li>
                 <li><a href="Tutorial.html"><b>Ajuda</b></a></li>
@@ -23,6 +34,8 @@
         </div>
 
     </header>
+
+
     <audio class="audio" src="resources/Beethoven Sonata No 23 Appassionata 3rd Movement.mp3" controls autoplay="True"></audio>
     <h1 id="titulo_jogo">Mine Sweeper The Game</h1>
 
@@ -45,8 +58,6 @@
         </tr>
 
     </table>
-    <button onclick="update_table(hist_jogos)">update</button>
-    <button onclick="delete_table()">Restart</button>
-    <script src="MineSweeper.js"></script>
+
 </body>
 </html>

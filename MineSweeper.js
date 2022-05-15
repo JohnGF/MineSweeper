@@ -48,11 +48,12 @@ let b = 0   //block play
 
 let hist_jogos = new Array()
 if (hist_jogos=JSON.parse(localStorage.getItem("hist_jogos"))!=[]){hist_jogos=JSON.parse(localStorage.getItem("hist_jogos"))}
+
 function special_togle() {
     if (special == 0) { special = 1; return }
     else { special = 0; return }
-
 }
+
 if (table != null) {
     table.addEventListener('contextmenu', e => {
         e.preventDefault();
@@ -118,13 +119,14 @@ function creat_map_aux() {
 
 //up is working
 function creat_map(r, c, prob, mapa, s = 1) {
-
+    if(document.getElementById("congratulation")!=null){document.getElementById("congratulation").remove()}
     bomb_table = new Array(); id_table = new Array(); f_click = 0; sec = 0; clearInterval(id_timer); timer.innerHTML = `Tempo:0`; x = 0; y = 0; random = 0
     b = 0
     hist_jogos=JSON.parse(localStorage.getItem("hist_jogos"))
-
+    if(hist_jogos==null){hist_jogos=[]}
     let oldtable = document.querySelector(".mapa");
     if (s == 1) { r = creat_map_aux()[0]; c = creat_map_aux()[1]; prob = creat_map_aux()[2] };
+        if(r==null || c==null || prob==null){r=9,c=9,prob=10}
     if (oldtable.innerHTML != "") { oldtable.innerHTML = ""; };
     table.appendChild(timer_star)
 
@@ -133,6 +135,7 @@ function creat_map(r, c, prob, mapa, s = 1) {
 
     clear_map(".mapa")
     if (special == 1) {
+        if(document.getElementById("life_counter")!=null){document.getElementById("life_counter").remove()}
         let div =document.createElement("div")
         div.setAttribute("id","life_counter")
         
@@ -165,6 +168,7 @@ function creat_map(r, c, prob, mapa, s = 1) {
         };
     }
     else {
+        if(document.getElementById("life_counter")!=null){document.getElementById("life_counter").remove()}
         for (let i = 0; i < r; i++) {
             let row = table.insertRow(i);
             for (let j = 0; j < c; j++) {
@@ -234,7 +238,7 @@ function change_cell(id) {
     if (cell_tochange.classList.contains("flag")) { return }
     if (cell_tochange.classList.contains("flag_question")) { return }
     if (cell_tochange.classList[0] != "hidden_cell") { return }
-    if (win == 1) { alert("Ganhaste") }
+    if (win == 1) { creat_congratulation() }
 
     split_id = id_c.split("_");
     let selected_cell = [parseInt(split_id[0], 10), parseInt(split_id[1], 10), parseInt(split_id[2], 10)];
@@ -253,7 +257,7 @@ function change_cell(id) {
                     else if (bomb_table[it].p == 3) { cell_tochange.classList.replace("hidden_cell", "bomb-3"), life = life - 4 }
                     document.getElementById("life_counter").innerHTML=`Vidas ${life}`
                     clearInterval(id_timer)
-                    if (life <= 0) { b = 1; alert("perdeste"); hist_jogos.push({ user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" });hist_jogos.push({ user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
+                    if (life <= 0) { b = 1; creat_lose(); hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" });hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
                 }
                 else { cell_tochange.classList.replace("hidden_cell", "bomb"), b = 1 }
 
@@ -263,11 +267,11 @@ function change_cell(id) {
                     clearInterval(id_timer);
                     if (multi == 1) {
 
-                        if (selected_cell[2] == 1) { return alert("jogador 2 perdeu"), hist_jogos.push({ user: "user1", score: sec, modo: "multiplayer" }),hist_jogos.push({ user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) ,multiplayer(l = 1) }
-                        if (selected_cell[2] == 0) { return alert("jogador 1 perdeu"), hist_jogos.push({ user: "user2", score: sec, modo: "multiplayer" }),hist_jogos.push({ user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) ,creat_map(r, c)}
+                        if (selected_cell[2] == 1) { return creat_congratulation(), hist_jogos.push({dim:`${r}x${c}`, user: "user1", score: sec, modo: "multiplayer" }),hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) ,multiplayer(l = 1) }
+                        if (selected_cell[2] == 0) { return creat_congratulation(), hist_jogos.push({dim:`${r}x${c}`, user: "user2", score: sec, modo: "multiplayer" }),hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) ,creat_map(r, c)}
                     }
                     
-                    else{clearInterval(id_timer),hist_jogos.push({ user: localStorage.getItem("user"), score: sec, modo: "classic" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos))}
+                    else{creat_lose(),clearInterval(id_timer),hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "classic" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos))}
                 }
             }
         }
@@ -313,7 +317,7 @@ function change_cell(id) {
     if (bomb_count == 8) { cell_tochange.classList.replace("hidden_cell", "bomb8"); }
     win_condition = win_condition + 1
 
-    if (document.getElementsByClassName("hidden_cell").length == bomb_table.length) { alert("Parabéns GANHAS-TE"); localStorage.setItem("score", `${sec},${user_v}`) }//creat_map(r,c,prob,s)}
+    if (document.getElementsByClassName("hidden_cell").length == bomb_table.length) { creat_congratulation(); localStorage.setItem("score", `${sec},${user_v}`) }//creat_map(r,c,prob,s)}
     document.getElementById("bomb_count").innerHTML = `Número de Bombas:${bomb_table.length}`
     return //cell_tochange.classList[0]=0
 }
@@ -437,7 +441,8 @@ function update_table(lista) {
     linhaTabela.innerHTML = "<th>#</th>" +
         "<th>Nome</th>" +
         "<th>Score</th>" +
-        "<th>Modo de Jogo</th>"
+        "<th>Modo de Jogo</th>"+
+        "<th>Dimensõe do tabuleiro</th>"
 
     tabelaNova.appendChild(linhaTabela);
     //user=getItem("user")
@@ -449,7 +454,9 @@ function update_table(lista) {
         linhaTabela.innerHTML = "<td>" + numeroEncomenda + "</td>" +
             "<td>" + hist_jogo.user + "</td>" +
             "<td>" + hist_jogo.score + "</td>" +
-            "<td>" + hist_jogo.modo + "</td>" 
+            "<td>" + hist_jogo.modo + "</td>"  +
+            "<td>" + hist_jogo.dim + "</td>"  
+
 
             tabelaNova.appendChild(linhaTabela);
         numeroEncomenda++;
@@ -462,7 +469,7 @@ function update_table(lista) {
 
 function delete_table() {
     localStorage.removeItem("hist_jogos")
-    document.getElementsByClassName(table_score).innerHTML = ""
+    document.getElementsByClassName("table_score").innerHTML = ""
 }
 function check_login(){
     let btt = document.createElement("button")
@@ -479,8 +486,8 @@ function check_login(){
         form.append(btt)
     }
 }
-function sort_list_score(){
-    hist_jogos.sort((a,b)=>{
+function sort_list_score(lista){
+    lista.sort((a,b)=>{
         if(a.score<b.score){
             return 1
         }
@@ -497,14 +504,83 @@ function sort_list_user(){
         else{return -1}})
 }
 
-function slice_list_user(){
+function slice_list_user(lista){
     let user_list=new Array()
     user=localStorage.getItem("user")
     for (let jogo of lista){
-        if (jogo.user==user){user_list.push}
+        if (jogo.user==user){user_list.push(jogo)}
     }
-    localStorage.setItem("user_list",JSON.stringify(user_list))
+    sort_list_score(user_list)
+    //localStorage.setItem("user_list",JSON.stringify(user_list))
+    update_table(user_list)
 }
+function slice_list_modo(lista,tipo){
+    let user_list=new Array()
+    for (let jogo of lista){
+        if (jogo.modo==tipo){user_list.push(jogo)}
+    }
+    sort_list_score(user_list)
+    //localStorage.setItem("user_list",JSON.stringify(user_list))
+    update_table(user_list)
+}
+
+
+
 function sort_list_score_10(){
     sort_list_score()
 }
+function creat_congratulation(){
+    let mensagem=""
+    if((Math.floor(Math.random() * 101) < 50)){mensagem="Parabéns &#x1F389! Aceitas novo desafio?"}
+    else{mensagem="Ganhaste! Voltamos a jogar?"}
+    
+    let div = document.createElement("div")
+    div.setAttribute("id","congratulation")
+    let p = document.createElement("p")
+    p.innerHTML=mensagem
+    let btn = document.createElement("button")
+    btn.innerHTML="Sim"
+    btn.addEventListener("click",creat_map)
+    let btn1 = document.createElement("button")
+    btn1.innerHTML="Não"
+    btn1.addEventListener("click",delete_div)
+    body.appendChild(div)
+    div.appendChild(p)
+    div.appendChild(btn)
+    
+    div.appendChild(btn1)
+}
+function delete_div(){
+    document.getElementById("congratulation").remove()
+    }
+
+function creat_lose(){
+    let mensagem=""
+    if((Math.floor(Math.random() * 101) < 50)){mensagem="Terás mais sorte para a próxima! Aceitas novo desafio?"}
+    else{mensagem="Ainda não foi desta &#x1F923	! Jogas de novo?"}
+    let div = document.createElement("div")
+    div.setAttribute("id","congratulation")
+    let p = document.createElement("p")
+    p.innerHTML=mensagem
+    let btn = document.createElement("button")
+    btn.innerHTML="Sim"
+    btn.addEventListener("click",creat_map)
+    let btn1 = document.createElement("button")
+    btn1.innerHTML="Não"
+    btn1.addEventListener("click",delete_div)
+    body.appendChild(div)
+    div.appendChild(p)
+    div.appendChild(btn)
+    
+    div.appendChild(btn1)
+}
+function change_color(){
+    let red = document.getElementById("rangeRed")
+    let green = document.getElementById("rangeGreen")
+    let blue = document.getElementById("rangeBlue")
+    let color =`rgb(${red.value},${green.value},${blue.value})`
+    document.documentElement.style.setProperty("--menu_background", color);
+}
+document.getElementById("rangeRed").addEventListener("input",change_color)
+document.getElementById("rangeGreen").addEventListener("input",change_color)
+document.getElementById("rangeBlue").addEventListener("input",change_color)
