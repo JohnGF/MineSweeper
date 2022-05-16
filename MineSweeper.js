@@ -255,9 +255,10 @@ function change_cell(id) {
                     else if (bomb_table[it].p == 1) { cell_tochange.classList.replace("hidden_cell", "bomb-1"), life = life - 2 }
                     else if (bomb_table[it].p == 2) { cell_tochange.classList.replace("hidden_cell", "bomb-2"), life = life - 3 }
                     else if (bomb_table[it].p == 3) { cell_tochange.classList.replace("hidden_cell", "bomb-3"), life = life - 4 }
+                    if(life<0){life=0}
                     document.getElementById("life_counter").innerHTML=`Vidas ${life}`
                     clearInterval(id_timer)
-                    if (life <= 0) { b = 1; creat_lose(); hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" });hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
+                    if (life == 0) { b = 1; creat_lose(); hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" });hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
                 }
                 else { cell_tochange.classList.replace("hidden_cell", "bomb"), b = 1 }
 
@@ -575,12 +576,21 @@ function creat_lose(){
     div.appendChild(btn1)
 }
 function change_color(){
-    let red = document.getElementById("rangeRed")
-    let green = document.getElementById("rangeGreen")
-    let blue = document.getElementById("rangeBlue")
-    let color =`rgb(${red.value},${green.value},${blue.value})`
+    let hue = document.getElementById("rangeHue")
+    let saturation = document.getElementById("rangeSaturation")
+    let light = document.getElementById("rangeLight")
+    let color =`hsv(${hue.value},${saturation.value}%,${light.value}%)`
     document.documentElement.style.setProperty("--menu_background", color);
+    document.documentElement.style.setProperty("--body_background", `hsv(${hue.value},${saturation.value+5}%,${light.value+5})%`);
 }
-document.getElementById("rangeRed").addEventListener("input",change_color)
-document.getElementById("rangeGreen").addEventListener("input",change_color)
-document.getElementById("rangeBlue").addEventListener("input",change_color)
+
+function lucky_color(){
+    Math.floor(Math.random() * 256)
+    let color =`rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`
+    let color1 =`rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`
+    document.documentElement.style.setProperty("--menu_background", color);
+    document.documentElement.style.setProperty("--body_background", color1);
+}
+document.getElementById("rangeHue").addEventListener("input",change_color)
+document.getElementById("rangeSaturation").addEventListener("input",change_color)
+document.getElementById("rangeLight").addEventListener("input",change_color)

@@ -20,11 +20,22 @@
                 <li onclick="setting_menu()"><b class="setting">Definições</b></li>
                 <li><a href="Historia.html"><b>Historia</b></a></li>
                 <li><a href="Tutorial.html"><b>Ajuda</b></a></li>
+                <li><div  class="dropdown">
+                    <div class="dropbtn">Color</div>
+                    <div id="sort_btn" class="dropdown-content">
+                        <label for="rangeHue">hue:</label>
+                        <input type="range" id="rangeHue" value="0" min="0" max="360"/>
+                        <label for="rangeSaturation">hue:</label>
+                        <input type="range" id="rangeSaturation" value="0" min="0" max="100"/>
+                        <label for="rangeLight">light:</label>
+                        <input type="range" id="rangeLight" value="0" min="0" max="100"/>
+                        <button onclick="lucky_color()">Feeling lucky? click me!</button>
+                </li>
 
         </div>
 
     </header>
-    <audio class="audio" controls autostart="True" > <source src="resources/Beethoven Sonata No 23 Appassionata 3rd Movement.mp3"type="audio/mpeg"   >Your browser does not support the html audio tag. </audio>
+    <iframe class="audio"  allow="autoplay" src="resources/Beethoven Sonata No 23 Appassionata 3rd Movement.mp3"type="audio/mpeg"   >Your browser does not support the html audio tag. </iframe>
     
     <h1 id="titulo_jogo">Mine Sweeper The Game</h1>
     <div id="container_generator" class="hidden">
@@ -40,12 +51,6 @@
         <input type="submit" value="Start">
         <input type="checkbox" id="checkbox1" value="Special Toggle" onclick="special_togle()">
         <label for="checkbox1">Special Toggle</label>
-        <label for="rangeRed">red:</label>
-        <input type="range" id="rangeRed" value="0" min="0" max="255"/>
-        <label for="rangeGreen">red:</label>
-        <input type="range" id="rangeGreen" value="0" min="0" max="255"/>
-        <label for="rangeBlue">blue:</label>
-        <input type="range" id="rangeBlue" value="0" min="0" max="255"/>
     </form>
     <button onclick="reveal_map()">Mostra Mapa</button>
     <button onclick="multiplayer()">Multiplayer</button>
@@ -83,5 +88,7 @@
         </ul>
     </div>
     <script src="MineSweeper.js"></script>
+
+
 </body>
 </html>

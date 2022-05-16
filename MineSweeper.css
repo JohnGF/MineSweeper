@@ -5,6 +5,7 @@
     --blank-bright:gray;
     --selecte-bright:rgb(70, 70, 70);
     --menu_background:orange;
+    --body_background:beige;
     --text-menu:black;
     --bomb0:  rgb(180, 179, 179);
     --bomb1: url(resources/simple_numbers/1.png);
@@ -24,6 +25,9 @@
     --bomb3: red;
     --bomb4:  rgb(0, 87, 0);
     --bomb5:yellow ;
+}
+body{
+    background-color: var(--body_background);
 }
 .welcome {
 	text-align: center;
@@ -403,11 +407,15 @@ text-align: center;
     margin: auto;
     padding: 10px;
     position: absolute;
+    left: 0;
+    right: 0;
+    top: 25em;
+    background: white;
 }
 /* Style The Dropdown Button */
 .dropbtn {
-    background-color: #4CAF50;
-    color: white;
+    background-color: var(--menu_background);
+    color: var(--text-menu);
     padding: 16px;
     font-size: 16px;
     border: none;
@@ -456,5 +464,5 @@ text-align: center;
   
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
+    background-color: var(--menu_background);
   }
