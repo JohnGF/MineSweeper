@@ -28,7 +28,9 @@
 }
 body{
     background-color: var(--body_background);
+    color: var(--text-menu)
 }
+
 .welcome {
 	text-align: center;
 	font-size: Larger;
@@ -432,7 +434,7 @@ text-align: center;
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: var(--body_background);
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;

@@ -579,9 +579,11 @@ function change_color(){
     let hue = document.getElementById("rangeHue")
     let saturation = document.getElementById("rangeSaturation")
     let light = document.getElementById("rangeLight")
-    let color =`hsv(${hue.value},${saturation.value}%,${light.value}%)`
+    let color =`hsl(${hue.value},${saturation.value}%,${light.value}%)`
     document.documentElement.style.setProperty("--menu_background", color);
-    document.documentElement.style.setProperty("--body_background", `hsv(${hue.value},${saturation.value+5}%,${light.value+5})%`);
+    document.documentElement.style.setProperty("--body_background", `hsl(${hue.value},${saturation.value-25}%,${light.value-25}%)`);
+    if(light.value<50){document.documentElement.style.setProperty("--text-menu", "white");}
+    else{document.documentElement.style.setProperty("--text-menu", "black")}
 }
 
 function lucky_color(){
