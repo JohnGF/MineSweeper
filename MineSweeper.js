@@ -381,6 +381,7 @@ function reveal_map() {
     }
 }
 //keyboard input
+if(document.getElementById("game_container")){
 document.addEventListener('keydown', (event) => {
     const keyName = event.key;
 
@@ -430,6 +431,7 @@ document.addEventListener('keydown', (event) => {
     }
     else { if (cell_tochange.classList[1] == "selec_keyboard") { cell_tochange.classList.toggle("selec_keyboard") } }
 })
+}
 function update_table(lista) {
     lista=lista
     let tabelaAntiga = document.getElementsByClassName("table_score")[0];
