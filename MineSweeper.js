@@ -582,8 +582,11 @@ function change_color(){
     let color =`hsl(${hue.value},${saturation.value}%,${light.value}%)`
     document.documentElement.style.setProperty("--menu_background", color);
     document.documentElement.style.setProperty("--body_background", `hsl(${hue.value},${saturation.value-25}%,${light.value-25}%)`);
-    if(light.value<50){document.documentElement.style.setProperty("--text-menu", "white");}
-    else{document.documentElement.style.setProperty("--text-menu", "black")}
+    if(light.value<50){document.documentElement.style.setProperty("--text-menu", "white");localStorage.setItem("text-menu","white")}
+    else{document.documentElement.style.setProperty("--text-menu", "black");localStorage.setItem("text-menu","black")}
+    localStorage.setItem("menu_background",color)
+   
+    localStorage.setItem("body_background",`hsl(${hue.value},${saturation.value-25}%,${light.value-25}%)`)
 }
 
 function lucky_color(){
@@ -592,7 +595,28 @@ function lucky_color(){
     let color1 =`rgb(${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)},${Math.floor(Math.random() * 256)})`
     document.documentElement.style.setProperty("--menu_background", color);
     document.documentElement.style.setProperty("--body_background", color1);
+
+    localStorage.setItem("menu_background",color)
+    localStorage.setItem("body_background",color1)
+
 }
+if(document.getElementById("rangeHue")!=null){
 document.getElementById("rangeHue").addEventListener("input",change_color)
 document.getElementById("rangeSaturation").addEventListener("input",change_color)
 document.getElementById("rangeLight").addEventListener("input",change_color)
+}
+function change_colors(){
+if ( localStorage.getItem("menu_background")!=null){
+    document.documentElement.style.setProperty("--menu_background", localStorage.getItem("menu_background"));
+    document.documentElement.style.setProperty("--body_background", localStorage.getItem("body_background"));
+    document.documentElement.style.setProperty("--text-menu", localStorage.getItem("text-menu"));
+}
+}
+function color_reset(){
+    document.documentElement.style.setProperty("--menu_background", "orange");
+    document.documentElement.style.setProperty("--body_background", "beige");
+    document.documentElement.style.setProperty("--text-menu", "black");
+    localStorage.setItem("menu_background","orange")
+    localStorage.setItem("body_background","beige")
+    localStorage.setItem("text-menu", "black" )
+}

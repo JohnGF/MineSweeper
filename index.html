@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="resources/favicon.png">
     <title>MineSweeper</title>
 </head>
-<body id="body" onload='creat_map(9,9,15,multi=0,s=0)'>
+<body id="body" onload='creat_map(9,9,15,multi=0,s=0);change_colors()'>
     <header>
         <div class="menus">
             <ul> 
@@ -30,6 +30,7 @@
                         <label for="rangeLight">light:</label>
                         <input type="range" id="rangeLight" value="50" min="0" max="100"/>
                         <button onclick="lucky_color()">Feeling lucky? click me!</button>
+                        <button onclick="color_reset()">Repor as Cores officiais</button>
                 </li>
 
         </div>
