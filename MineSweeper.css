@@ -16,6 +16,7 @@
     --bomb6: url(resources/simple_numbers/6.png);
     --bomb7: url(resources/simple_numbers/7.png);
     --bomb8: url(resources/simple_numbers/8.png);
+    --life_img :url(resources/life_5_5.png);
     
 }
 :color{
@@ -30,7 +31,14 @@ body{
     background-color: var(--body_background);
     color: var(--text-menu)
 }
-
+#life_counter{
+  
+}
+img {
+    width: 100%; /* or any custom size */
+    height: 100%; 
+    object-fit: contain;
+}
 .welcome {
 	text-align: center;
 	font-size: Larger;
@@ -335,7 +343,7 @@ text-align: center;
 	/* justify-content: center; */
 	margin: auto;
 	margin-bottom: 10px;
-	height: 50px;
+
 }
 .selec_keyboard{
     border: red solid;

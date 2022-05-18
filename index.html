@@ -40,7 +40,7 @@
     
     <h1 id="titulo_jogo">Mine Sweeper The Game</h1>
     <div id="container_generator" class="hidden">
-    <form action="javascript:;" onsubmit='creat_map(r,c,prob,multi=0,s = 1)' class="map_generator">
+    <form action="javascript:;" onsubmit='creat_map(r,c,prob,s = 1)' class="map_generator">
         <label for="r">Numero de colunas</label>
         <input type="number" id="r" name="r">
         <label for="c">Numero de linhas</label>
@@ -52,18 +52,20 @@
         <input type="submit" value="Start">
         <input type="checkbox" id="checkbox1" value="Special Toggle" onclick="special_togle()">
         <label for="checkbox1">Special Toggle</label>
+        <input type="checkbox" id="checkbox1" value="Special Toggle" onclick="multiplayer()">
+        <label for="checkbox1">Multiplayer Toggle</label>
     </form>
     <button onclick="reveal_map()">Mostra Mapa</button>
-    <button onclick="multiplayer()">Multiplayer</button>
-    <button onclick="creat_map(r,c,prob,multi=0,s = 1)">Restart</button>
-    
+    <!-- <button onclick="multiplayer()">Multiplayer</button> -->
     <!-- <button onclick="special_togle()">Special Toggle</button> -->
     </div>
     <div id="board_stat">
     <div id="bomb_count">Número de Bombas:</div>
     <div id="bomb_count_flag">Bombas com bandeira:</div>
+    <button id="Restart" onclick="creat_map(r,c,prob,multi=0,s = 1)">Restart</button>
     </div>
     <div id="game_container">
+        
         <table class="mapa" id="clock">
 
         </table>

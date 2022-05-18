@@ -11,6 +11,7 @@ let timer = document.querySelector("#timer");
 let bomb_table = new Array();
 let id_table = new Array();
 //multiplayer
+let p=0
 let bomb_table_1 = new Array();
 let id_table_1 = new Array();
 let multi = 0;
@@ -43,8 +44,8 @@ let life = Number();
 let random = 0
 let special = 0;
 let b = 0   //block play
-
-
+let img = document.createElement("img");
+img.setAttribute("id","life_counter")
 
 let hist_jogos = new Array()
 if (hist_jogos=JSON.parse(localStorage.getItem("hist_jogos"))!=[]){hist_jogos=JSON.parse(localStorage.getItem("hist_jogos"))}
@@ -137,11 +138,11 @@ function creat_map(r, c, prob, mapa, s = 1) {
     if (special == 1) {
         if(document.getElementById("life_counter")!=null){document.getElementById("life_counter").remove()}
         let div =document.createElement("div")
-        div.setAttribute("id","life_counter")
         
+        img.src = "resources/life_5_5.png";
         life = 5 // posso passar para funcao
-        div.innerHTML=`Vidas ${life}`
-        document.getElementById("board_stat").append(div)
+        //div.innerHTML=`Vidas ${life}`
+        document.getElementById("board_stat").append(img)
         for (let i = 0; i < r; i++) {
             let row = table.insertRow(i);
             for (let j = 0; j < c; j++) {
@@ -194,6 +195,7 @@ function creat_map(r, c, prob, mapa, s = 1) {
     win = id_table.lengt
     //----
     if (multi == 1) {
+        document.getElementById("game_container").classList.add("game_container1")
         clear_map(".mapa1")
         multi_table.innerHTML = ""
         for (let i = 0; i < r; i++) {
@@ -216,23 +218,37 @@ function creat_map(r, c, prob, mapa, s = 1) {
         };
 
     }
+    //document.getElementsByClassName("mapa1")[0].remove()
+    if(document.getElementById("game_container").classList.contains("game_container1") && multi==0){document.getElementsByClassName("mapa1").innerHTML="";document.getElementById("game_container").classList.remove("game_container1")}
     return bomb_table
 };
-function multiplayer(l = 0) {
-    multi = 1
-    creat_map(r, c, prob, s = 1)
-    document.getElementById("game_container").classList.add("game_container1")
+//esta funcionar e de outro lado
+function multiplayer() {
+    if (multi == 0) { multi = 1; return}
+    else{multi=0; return}
 
-    if (l == 0) {
-        creat_map(r, c, prob, s = 1)
-    }
+    // creat_map(r, c, prob, s = 1)
+    // document.getElementById("game_container").classList.add("game_container1")
+
+    // if (l == 0) {
+    //     creat_map(r, c, prob, s = 1)
+    // }
 }
 
 function change_cell(id) {
+    let id_c = id
+    let condition =true
+    split_id = id_c.split("_");
+    if(multi==1){
+        while (condition){
+        if(parseInt(split_id[2], 10)==0 && p==0){ p = 1;condition=false }
+        else if(parseInt(split_id[2], 10)==1 && p==1){ p = 0;condition=false}
+    }
+    }
     if (b == 1) { return }
     if (f_click == 0) { id_timer = setInterval(timer_f, 1000); } //conta tempo
     //if (f_click==0){const id_timer=setInterval(coundown(time),time*1000)} //cronometra
-    let id_c = id
+
     const cell_tochange = document.getElementById(id_c);
     if (cell_tochange == null) { return }
     if (cell_tochange.classList.contains("flag")) { return }
@@ -240,7 +256,7 @@ function change_cell(id) {
     if (cell_tochange.classList[0] != "hidden_cell") { return }
     if (win == 1) { creat_congratulation() }
 
-    split_id = id_c.split("_");
+    
     let selected_cell = [parseInt(split_id[0], 10), parseInt(split_id[1], 10), parseInt(split_id[2], 10)];
     for (let it = 0; it < bomb_table.length; it++) {
         if (bomb_table[it].i == selected_cell[0] && bomb_table[it].j == selected_cell[1] && bomb_table[it].m == selected_cell[2]) {
@@ -256,6 +272,10 @@ function change_cell(id) {
                     else if (bomb_table[it].p == 2) { cell_tochange.classList.replace("hidden_cell", "bomb-2"), life = life - 3 }
                     else if (bomb_table[it].p == 3) { cell_tochange.classList.replace("hidden_cell", "bomb-3"), life = life - 4 }
                     if(life<0){life=0}
+                    if(life==4){img.src="resources/life_4_5.png"}
+                    else if(life==3){img.src="resources/life_3_5.png"}
+                    else if(life==2){img.src="resources/life_2_5.png"}
+                    else if(life==1){img.src="resources/life_1_5.png"}
                     document.getElementById("life_counter").innerHTML=`Vidas ${life}`
                     clearInterval(id_timer)
                     if (life == 0) { b = 1; creat_lose(); hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" });hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
@@ -268,7 +288,7 @@ function change_cell(id) {
                     clearInterval(id_timer);
                     if (multi == 1) {
 
-                        if (selected_cell[2] == 1) { return creat_congratulation(), hist_jogos.push({dim:`${r}x${c}`, user: "user1", score: sec, modo: "multiplayer" }),hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) ,multiplayer(l = 1) }
+                        if (selected_cell[2] == 1) { return creat_congratulation(), hist_jogos.push({dim:`${r}x${c}`, user: "user1", score: sec, modo: "multiplayer" }),hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) ,creat_map(r, c) }
                         if (selected_cell[2] == 0) { return creat_congratulation(), hist_jogos.push({dim:`${r}x${c}`, user: "user2", score: sec, modo: "multiplayer" }),hist_jogos.push({dim:`${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }),localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) ,creat_map(r, c)}
                     }
                     
