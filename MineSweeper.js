@@ -377,10 +377,10 @@ function flag(id) {
     var cell_tochange = document.getElementById(id_c);
     if (cell_tochange.classList[0] != "hidden_cell") { return }
 
-    if (selector == 2) { cell_tochange.classList.toggle("flag_question"); selector = 3 }
-    if (selector == 1) { cell_tochange.classList.toggle("flag"), cell_tochange.classList.toggle("flag_question"); selector = 2 }
-    if (selector == 0) { cell_tochange.classList.toggle("flag"); selector = 1 }
-    if (selector == 3) { selector = 0 }
+    if (cell_tochange.classList.contains("flag_question")) { cell_tochange.classList.toggle("flag_question");}
+    else if (cell_tochange.classList.contains("flag")) { cell_tochange.classList.toggle("flag"), cell_tochange.classList.toggle("flag_question"); }
+    else if (!(cell_tochange.classList.contains("flag"))) { cell_tochange.classList.toggle("flag"); }
+ 
 
     document.getElementById("bomb_count_flag").innerHTML = `Bombas com bandeira:${bomb_table.length - document.getElementsByClassName("flag").length}`
 }
