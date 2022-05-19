@@ -232,7 +232,7 @@ function creat_map(r, c, prob, mapa, s = 1) {
         };
 
     }
-    else{time1.innerHTML="";time2.innerHTML=""}
+    if(multi==0){time1.innerHTML="";time2.innerHTML=""}
     //document.getElementsByClassName("mapa1")[0].remove()
     if(document.getElementById("game_container").classList.contains("game_container1") && multi==0){document.getElementsByClassName("mapa1")[0].innerHTML="";document.getElementById("game_container").classList.remove("game_container1")}
     return bomb_table
