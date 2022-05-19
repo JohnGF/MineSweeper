@@ -88,16 +88,16 @@ function explorer(SList) {
     split_id = id.split("_");
     let selected_cell = [parseInt(split_id[0], 10), parseInt(split_id[1], 10), parseInt(split_id[2], 10)];
     //console.log(selected_cell)
-    change_cell(`${selected_cell[0] + 1}_${selected_cell[1]}_${selected_cell[2]}`)
-    change_cell(`${selected_cell[0]}_${selected_cell[1] + 1}_${selected_cell[2]}`)
-    change_cell(`${selected_cell[0] + 1}_${selected_cell[1] + 1}_${selected_cell[2]}`)
+    change_cell(`${selected_cell[0] + 1}_${selected_cell[1]}_${selected_cell[2]}`,open=1)
+    change_cell(`${selected_cell[0]}_${selected_cell[1] + 1}_${selected_cell[2]}`,open=1)
+    change_cell(`${selected_cell[0] + 1}_${selected_cell[1] + 1}_${selected_cell[2]}`,open=1)
 
-    change_cell(`${selected_cell[0] - 1}_${selected_cell[1]}_${selected_cell[2]}`)
-    change_cell(`${selected_cell[0]}_${selected_cell[1] - 1}_${selected_cell[2]}`)
-    change_cell(`${selected_cell[0] - 1}_${selected_cell[1] - 1}_${selected_cell[2]}`)
+    change_cell(`${selected_cell[0] - 1}_${selected_cell[1]}_${selected_cell[2]}`,open=1)
+    change_cell(`${selected_cell[0]}_${selected_cell[1] - 1}_${selected_cell[2]}`,open=1)
+    change_cell(`${selected_cell[0] - 1}_${selected_cell[1] - 1}_${selected_cell[2]}`,open=1)
 
-    change_cell(`${selected_cell[0] + 1}_${selected_cell[1] - 1}_${selected_cell[2]}`)
-    change_cell(`${selected_cell[0] - 1}_${selected_cell[1] + 1}_${selected_cell[2]}`)
+    change_cell(`${selected_cell[0] + 1}_${selected_cell[1] - 1}_${selected_cell[2]}`,open=1)
+    change_cell(`${selected_cell[0] - 1}_${selected_cell[1] + 1}_${selected_cell[2]}`,open=1)
 
 };
 function creat_map_aux() {
@@ -234,17 +234,19 @@ function multiplayer() {
     //     creat_map(r, c, prob, s = 1)
     // }
 }
+function toggle_p() {
+    if (p == 0) { p = 1; return}
+    else{p=0; return}}
 
-function change_cell(id) {
+function change_cell(id,open=0) {
     let id_c = id
     let condition =true
     split_id = id_c.split("_");
     if(multi==1){
-        while (condition){
-        if(parseInt(split_id[2], 10)==0 && p==0){ p = 1;condition=false }
-        else if(parseInt(split_id[2], 10)==1 && p==1){ p = 0;condition=false}
+        if(parseInt(split_id[2], 10)==0 && p==1){return }
+        else if(parseInt(split_id[2], 10)==1 && p==0){ return}
     }
-    }
+    
     if (b == 1) { return }
     if (f_click == 0) { id_timer = setInterval(timer_f, 1000); } //conta tempo
     //if (f_click==0){const id_timer=setInterval(coundown(time),time*1000)} //cronometra
@@ -340,6 +342,7 @@ function change_cell(id) {
 
     if (document.getElementsByClassName("hidden_cell").length == bomb_table.length) { creat_congratulation(); localStorage.setItem("score", `${sec},${user_v}`) }//creat_map(r,c,prob,s)}
     document.getElementById("bomb_count").innerHTML = `Número de Bombas:${bomb_table.length}`
+    if(open==0){toggle_p()}
     return //cell_tochange.classList[0]=0
 }
 function timer_f() {
