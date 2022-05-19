@@ -15,7 +15,15 @@ let p=0
 let bomb_table_1 = new Array();
 let id_table_1 = new Array();
 let multi = 0;
-
+let id_timer1=0 //para countdowns
+let id_timer2=0
+let time1= document.createElement("div")
+let time2= document.createElement("div")
+time1.setAttribute("id","time_multi")
+time2.setAttribute("id","time_multi")
+let timeout=60
+let timeout1=60
+let timeout2=60
 //timer
 var win = 0
 
@@ -104,6 +112,7 @@ function creat_map_aux() {
     localStorage.setItem("row", document.querySelector("#r").value);
     localStorage.setItem("col", document.querySelector("#c").value);
     localStorage.setItem("prob", document.querySelector("#prob").value);
+    localStorage.setItem("time", document.querySelector("#time").value);
     //localStorage.setItem("prob", document.querySelector("#prob").value); por tempo
     r = localStorage.getItem("row");
     c = localStorage.getItem("col");
@@ -128,6 +137,7 @@ function creat_map(r, c, prob, mapa, s = 1) {
     let oldtable = document.querySelector(".mapa");
     if (s == 1) { r = creat_map_aux()[0]; c = creat_map_aux()[1]; prob = creat_map_aux()[2] };
         if(r==null || c==null || prob==null){r=9,c=9,prob=10}
+        if(localStorage.getItem("time")==""){localStorage.setItem("time",60)}
     if (oldtable.innerHTML != "") { oldtable.innerHTML = ""; };
     table.appendChild(timer_star)
 
@@ -198,6 +208,10 @@ function creat_map(r, c, prob, mapa, s = 1) {
         document.getElementById("game_container").classList.add("game_container1")
         clear_map(".mapa1")
         multi_table.innerHTML = ""
+        time1.innerHTML=`Time left: ${timeout}`
+        time2.innerHTML=`Time left: ${timeout}`
+        document.getElementById("game_container").append(time1)
+        document.getElementById("game_container").append(time2)
         for (let i = 0; i < r; i++) {
             let row = multi_table.insertRow(i);
             for (let j = 0; j < c; j++) {
@@ -218,8 +232,9 @@ function creat_map(r, c, prob, mapa, s = 1) {
         };
 
     }
+    else{time1.innerHTML="";time2.innerHTML=""}
     //document.getElementsByClassName("mapa1")[0].remove()
-    if(document.getElementById("game_container").classList.contains("game_container1") && multi==0){document.getElementsByClassName("mapa1").innerHTML="";document.getElementById("game_container").classList.remove("game_container1")}
+    if(document.getElementById("game_container").classList.contains("game_container1") && multi==0){document.getElementsByClassName("mapa1")[0].innerHTML="";document.getElementById("game_container").classList.remove("game_container1")}
     return bomb_table
 };
 //esta funcionar e de outro lado
@@ -234,22 +249,29 @@ function multiplayer() {
     //     creat_map(r, c, prob, s = 1)
     // }
 }
+//timeout1 = parseInt(localStorage.getItem("time"), 10);
 function toggle_p() {
-    if (p == 0) { p = 1; return}
-    else{p=0; return}}
+    if (p == 0) { p = 1; clearInterval(id_timer2);
+        id_timer1=setInterval(countdown,1000,time1);
+        return
+    }
+    else{p=0;clearInterval(id_timer1);
+        id_timer2=setInterval(countdown,1000,time2) ;
+        return}}
 
 function change_cell(id,open=0) {
     let id_c = id
     let condition =true
     split_id = id_c.split("_");
     if(multi==1){
+        
         if(parseInt(split_id[2], 10)==0 && p==1){return }
         else if(parseInt(split_id[2], 10)==1 && p==0){ return}
     }
     
     if (b == 1) { return }
     if (f_click == 0) { id_timer = setInterval(timer_f, 1000); } //conta tempo
-    //if (f_click==0){const id_timer=setInterval(coundown(time),time*1000)} //cronometra
+    if (f_click==0){} //cronometra
 
     const cell_tochange = document.getElementById(id_c);
     if (cell_tochange == null) { return }
@@ -349,9 +371,10 @@ function timer_f() {
     sec = sec + 1
     timer.innerHTML = `Tempo:${sec}`
 }
-function coundown(sec) {
-    sec = sec - 1
-    timer.innerHTML = `Tempo:${sec}`
+function countdown(ele) {
+    t=parseInt(ele.innerHTML.split(":")[1] , 10)
+    t=t-1
+    ele.innerHTML = `Time left: ${t}`
 }
 
 function clear_map(mapa) {

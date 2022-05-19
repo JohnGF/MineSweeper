@@ -31,9 +31,10 @@ body{
     background-color: var(--body_background);
     color: var(--text-menu)
 }
-#life_counter{
-  
+#time_multi{
+    text-align: center;
 }
+
 img {
     width: 100%; /* or any custom size */
     height: 100%; 
