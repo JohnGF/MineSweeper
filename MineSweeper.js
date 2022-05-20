@@ -54,8 +54,13 @@ let special = 0;
 let b = 0   //block play
 let img = document.createElement("img");
 img.setAttribute("id", "life_counter")
-
+//
+let music=new Audio()
+let kirby=new Audio("resources/music/Kirby dream land theme song.ogg")
+let bethoven=new Audio("resources/music/Beethoven Sonata No 23 Appassionata 3rd Movement.mp3")
+let starwars=new Audio("resources/music/Star Wars - The Imperial March.ogg")
 let hist_jogos = new Array()
+function isPlaying(audelem) { return !audelem.paused; }
 if (hist_jogos = JSON.parse(localStorage.getItem("hist_jogos")) != []) { hist_jogos = JSON.parse(localStorage.getItem("hist_jogos")) }
 
 function special_togle() {
@@ -90,9 +95,7 @@ function login() {
     window.location = "index.html"
 
 }
-function first_click() {
 
-};
 function explorer(SList) {
     id = SList.shift()
     split_id = id.split("_");
@@ -131,6 +134,7 @@ function creat_map_aux() {
 
 //up is working
 function creat_map(r, c, prob, mapa, s = 1) {
+    if(isPlaying(music)){music.pause()}
     if (document.getElementById("congratulation") != null) { document.getElementById("congratulation").remove() }
     bomb_table = new Array(); id_table = new Array(); f_click = 0; sec = 0; clearInterval(id_timer); timer.innerHTML = `Tempo:0`; x = 0; y = 0; random = 0
     b = 0
@@ -253,21 +257,30 @@ function multiplayer() {
 }
 //timeout1 = parseInt(localStorage.getItem("time"), 10);
 function toggle_p() {
+    
     if (p == 0) {
+        time1.innerHTML = `Time left: ${timeout}`
         p = 1; clearInterval(id_timer2);
         id_timer1 = setInterval(countdown, 1000, time1);
         return
     }
     else {
+        time2.innerHTML = `Time left: ${timeout}`
         p = 0; clearInterval(id_timer1);
         id_timer2 = setInterval(countdown, 1000, time2);
         return
     }
 }
-
+function pick_music(){
+    
+    if ((Math.floor(Math.random() * 101) < 33)) {music=kirby}
+    else if(33<(Math.floor(Math.random() * 101)) && (Math.floor(Math.random() * 101) < 66)){music=bethoven}
+    else { music=starwars}
+    music.play()
+}
 function change_cell(id, open = 0) {
     let id_c = id
-    let condition = true
+
     split_id = id_c.split("_");
     if (multi == 1) {
 
@@ -276,8 +289,9 @@ function change_cell(id, open = 0) {
     }
 
     if (b == 1) { return }
-    if (f_click == 0) { id_timer = setInterval(timer_f, 1000); } //conta tempo
-    if (f_click == 0) { } //cronometra
+    if (f_click == 0) {pick_music(); 
+        id_timer = setInterval(timer_f, 1000); } //conta tempo
+    
 
     const cell_tochange = document.getElementById(id_c);
     if (cell_tochange == null) { return }
@@ -380,7 +394,9 @@ function timer_f() {
 function countdown(ele) {
     t = parseInt(ele.innerHTML.split(":")[1], 10)
     t = t - 1
+    if(t ==0){toggle_p()}
     ele.innerHTML = `Time left: ${t}`
+
 }
 
 function clear_map(mapa) {
