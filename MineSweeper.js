@@ -283,6 +283,7 @@ function pick_music(){
     if ((Math.floor(Math.random() * 101) < 33)) {music=kirby}
     else if(33<(Math.floor(Math.random() * 101)) && (Math.floor(Math.random() * 101) < 66)){music=bethoven}
     else { music=starwars}
+    music.load()
     music.play()
 }
 function change_cell(id, open = 0) {
