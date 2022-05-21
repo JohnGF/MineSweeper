@@ -80,7 +80,10 @@ img {
 
 
 }
-#kmines_img{float: right;}
+#kmines_img {
+    width: auto;
+    float: right;
+}
 #bloco_texto{float: left;
 width: 50%;
 left: 5%;
