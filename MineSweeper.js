@@ -59,6 +59,7 @@ let music=new Audio()
 let kirby=new Audio("resources/music/Kirby dream land theme song.ogg")
 let bethoven=new Audio("resources/music/Beethoven Sonata No 23 Appassionata 3rd Movement.mp3")
 let starwars=new Audio("resources/music/Star Wars - The Imperial March.ogg")
+let winning_sfx=new Audio("resources/music/Beat Saber - Level Cleared Sound Effect.mp3")
 let hist_jogos = new Array()
 function isPlaying(audelem) { return !audelem.paused; }
 if (hist_jogos = JSON.parse(localStorage.getItem("hist_jogos")) != []) { hist_jogos = JSON.parse(localStorage.getItem("hist_jogos")) }
@@ -127,6 +128,7 @@ function creat_map_aux() {
     r = localStorage.getItem("row");
     c = localStorage.getItem("col");
     let prob = localStorage.getItem("prob");
+    timeout=localStorage.getItem("time")
     if (r == "" && c == "" && prob == "") {
         r = 9; c = 9; prob = 25
         s = 0
@@ -327,7 +329,7 @@ function change_cell(id, open = 0) {
                     else if (life == 1) { img.src = "resources/life_1_5.png" }
                     document.getElementById("life_counter").innerHTML = `Vidas ${life}`
                     clearInterval(id_timer)
-                    if (life == 0) { b = 1; creat_lose(); hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }); hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
+                    if (life == 0) {if(isPlaying(music)){music.pause()} b = 1; creat_lose(); hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }); hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
                 }
                 else { cell_tochange.classList.replace("hidden_cell", "bomb"), b = 1 }
 
@@ -337,11 +339,11 @@ function change_cell(id, open = 0) {
                     clearInterval(id_timer);
                     if (multi == 1) {
 
-                        if (selected_cell[2] == 1) { return creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user1", score: sec, modo: "multiplayer" }), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c) }
-                        if (selected_cell[2] == 0) { return creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user2", score: sec, modo: "multiplayer" }), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c) }
+                        if (selected_cell[2] == 1) { if(isPlaying(music)){music.pause()} creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user1", score: sec, modo: "multiplayer" }), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c) }
+                        if (selected_cell[2] == 0) { if(isPlaying(music)){music.pause()} creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user2", score: sec, modo: "multiplayer" }), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c) }
                     }
 
-                    else { creat_lose(), clearInterval(id_timer), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Classico" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
+                    else {if(isPlaying(music)){music.pause()} creat_lose(), clearInterval(id_timer), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Classico" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
                 }
             }
         }
@@ -387,7 +389,7 @@ function change_cell(id, open = 0) {
     if (bomb_count == 8) { cell_tochange.classList.replace("hidden_cell", "bomb8"); }
     win_condition = win_condition + 1
 
-    if (document.getElementsByClassName("hidden_cell").length == bomb_table.length) { creat_congratulation(); localStorage.setItem("score", `${sec},${user_v}`) }//creat_map(r,c,prob,s)}
+    if (document.getElementsByClassName("hidden_cell").length == bomb_table.length) {if(isPlaying(music)){music.pause()} creat_congratulation(); localStorage.setItem("score", `${sec},${user_v}`) }//creat_map(r,c,prob,s)}
     document.getElementById("bomb_count").innerHTML = `Número de Bombas:${bomb_table.length}`
     if (open == 0) { toggle_p() }
     return //cell_tochange.classList[0]=0
@@ -654,6 +656,7 @@ function sort_list_score_10() {
     sort_list_score()
 }
 function creat_congratulation() {
+    winning_sfx.play()
     let mensagem = ""
     if ((Math.floor(Math.random() * 101) < 50)) { mensagem = "Parabéns &#x1F389! Aceitas novo desafio?" }
     else { mensagem = "Ganhaste! Voltamos a jogar?" }
