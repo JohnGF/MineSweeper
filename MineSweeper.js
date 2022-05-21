@@ -506,6 +506,7 @@ if (document.getElementById("game_container")) {
     })
 }
 function update_table(lista) {
+    if(lista==null){return}
     lista = lista
     let tabelaAntiga = document.getElementsByClassName("table_score")[0];
 
