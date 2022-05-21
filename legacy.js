@@ -144,7 +144,7 @@ function flag(id){
     if (selector==0){cell_tochange.classList.toggle("flag");selector=1}
     if (selector==3){selector=0}
 
-    document.getElementById("bomb_count_flag").innerHTML=`Bombas com bandeira:${bomb_table.length-document.getElementsByClassName("flag").length}`
+    document.getElementById("bomb_count_flag").innerHTML=`Bombas sem bandeira:${bomb_table.length-document.getElementsByClassName("flag").length}`
     // if (cell_tochange.classList.contains("flag")){cell_tochange.classList.remove("flag")}
     // if (cell_tochange.classList.contains("")){cell_tochange.classList.add("flag")}
     // console.log(cell_tochange.classList)
@@ -532,7 +532,7 @@ function flag(id) {
     if (selector == 0) { cell_tochange.classList.toggle("flag"); selector = 1 }
     if (selector == 3) { selector = 0 }
 
-    document.getElementById("bomb_count_flag").innerHTML = `Bombas com bandeira:${bomb_table.length - document.getElementsByClassName("flag").length}`
+    document.getElementById("bomb_count_flag").innerHTML = `Bombas sem bandeira:${bomb_table.length - document.getElementsByClassName("flag").length}`
 }
 function flag_q(id) {
     let id_c = id

@@ -330,7 +330,7 @@ function change_cell(id, open = 0) {
                     else if (life == 1) { img.src = "resources/life_1_5.png" }
                     document.getElementById("life_counter").innerHTML = `Vidas ${life}`
                     clearInterval(id_timer)
-                    if (life == 0) {if(isPlaying(music)){music.pause()} b = 1; creat_lose(); hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }); hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Diferenciado" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
+                    if (life == 0) {if(isPlaying(music)){music.pause()} b = 1; creat_lose(); hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Special" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
                 }
                 else { cell_tochange.classList.replace("hidden_cell", "bomb"), b = 1 }
 
@@ -340,11 +340,11 @@ function change_cell(id, open = 0) {
                     clearInterval(id_timer);
                     if (multi == 1) {
 
-                        if (selected_cell[2] == 1) { if(isPlaying(music)){music.pause()} creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user1", score: sec, modo: "multiplayer" }), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c) }
-                        if (selected_cell[2] == 0) { if(isPlaying(music)){music.pause()} creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user2", score: sec, modo: "multiplayer" }), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c) }
+                        if (selected_cell[2] == 1) { if(isPlaying(music)){music.pause()} creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user1", score: sec, modo: "multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c) }
+                        if (selected_cell[2] == 0) { if(isPlaying(music)){music.pause()} creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user2", score: sec, modo: "multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c) }
                     }
 
-                    else {if(isPlaying(music)){music.pause()} creat_lose(), clearInterval(id_timer), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Classico" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
+                    else {if(isPlaying(music)){music.pause()} creat_lose(), clearInterval(id_timer), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Clássico" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
                 }
             }
         }
@@ -438,7 +438,7 @@ function flag(id) {
     else if (!(cell_tochange.classList.contains("flag"))) { cell_tochange.classList.toggle("flag"); }
 
 
-    document.getElementById("bomb_count_flag").innerHTML = `Bombas com bandeira:${bomb_table.length - document.getElementsByClassName("flag").length}`
+    document.getElementById("bomb_count_flag").innerHTML = `Bombas sem bandeira:${bomb_table.length - document.getElementsByClassName("flag").length}`
 }
 function flag_q(id) {
     let id_c = id
@@ -522,7 +522,7 @@ function update_table(lista) {
         "<th>Nome</th>" +
         "<th>Score</th>" +
         "<th>Modo de Jogo</th>" +
-        "<th>Dimensõe do tabuleiro</th>"
+        "<th>Dimensões do tabuleiro</th>"
 
     tabelaNova.appendChild(linhaTabela);
     //user=getItem("user")
@@ -550,7 +550,7 @@ function update_table(lista) {
 function delete_table(lista) {
     localStorage.removeItem("hist_jogos")
     document.getElementsByClassName("table_score").innerHTML = ""
-    update_table(lista)
+    location.reload()
 }
 function check_login() {
     let btt = document.createElement("button")

@@ -1,0 +1,9 @@
+Se correr o código diretamente do file:// recomenda-se o uso de um browser que consiga guardar local storage nesse protocolo.
+Recomenda-se neste caso o uso do Chrome.
+
+No login pode-se entrar como convidado, sem fazer  registo.
+
+Há um ficheiro com background animado que é o MineSweeper.html em vez do index.html
+
+Também pode aceder ao jogo online usando o link:
+https://johngf.github.io/MineSweeper/
