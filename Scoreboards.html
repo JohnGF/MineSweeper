@@ -6,7 +6,8 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="MineSweeper.css">
+        <link rel="stylesheet" type="text/css" href="MineSweeper.css">
+        <link rel="stylesheet" type="text/css" href="table_css.css">
         <link rel="shortcut icon" href="resources/favicon.png">
         <title>MineSweeper</title>
     </head>
@@ -16,14 +17,15 @@
             <ul> 
                 <li><a href="index.html"><img class="fitLogo" src="resources/logo1.jpg" alt="Logo da Aplicação"/></a></li>
                 <li>    <div  class="dropdown">
-                    <div class="dropbtn">Scoreboard</div>
+                    <div class="dropbtn">Sorting Options</div>
                     <div id="sort_btn" class="dropdown-content">
                     <button onclick="update_table(hist_jogos)">Update</button>
                     <button onclick="slice_list_user(hist_jogos)">Scores Utilizador</button>
-                    <button onclick="slice_list_modo(hist_jogos,'classic')">Scores Classico</button>
+                    <button onclick="slice_list_modo(hist_jogos,'Classico')">Scores Classico</button>
                     <button onclick="slice_list_modo(hist_jogos,'Diferenciado')">Scores Diferenciado</button>
+                    <button onclick="slice_list_modo(hist_jogos,'Multiplayer')">Scores Multiplayer</button>
                     <button onclick="sort_list_score(hist_jogos)">Ordena por pontuação</button>
-                    <button onclick="delete_table()">Elimina dados</button>
+                    <button onclick="delete_table(hist_jogos)">Elimina dados</button>
                     <script src="MineSweeper.js"></script>
                     </div>
                 </div></li>

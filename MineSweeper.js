@@ -74,7 +74,12 @@ if (table != null) {
     })
 }
 function check_loging() {
-    if (localStorage.getItem("user") == null) { window.location = "login.html" }
+    if (localStorage.getItem("user") == null) { window.location = "login_special.html" }
+
+}
+function check_loging_s() {
+    if (localStorage.getItem("user") == null) { window.location = "login_special.html" }
+    else{window.location = "login_special_on.html" }
 }
 function login() {
     let user = document.getElementById("user")
@@ -336,7 +341,7 @@ function change_cell(id, open = 0) {
                         if (selected_cell[2] == 0) { return creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user2", score: sec, modo: "multiplayer" }), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c) }
                     }
 
-                    else { creat_lose(), clearInterval(id_timer), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "classic" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
+                    else { creat_lose(), clearInterval(id_timer), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Classico" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
                 }
             }
         }
@@ -538,9 +543,10 @@ function update_table(lista) {
 
 }
 
-function delete_table() {
+function delete_table(lista) {
     localStorage.removeItem("hist_jogos")
     document.getElementsByClassName("table_score").innerHTML = ""
+    update_table(lista)
 }
 function check_login() {
     let btt = document.createElement("button")
