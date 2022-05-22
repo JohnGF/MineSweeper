@@ -180,9 +180,9 @@ function creat_map(r, c, prob, mapa, s = 1) {
                 if (Math.floor(Math.random() * 101) < prob) {
                     random = (Math.floor(Math.random() * 101))
 
-                    if (0 < random && random < 25) { bomb_table.push({ i: i, j: j, m: 0, p: 0 }) }
-                    else if (25 < random && random < 50) { bomb_table.push({ i: i, j: j, m: 0, p: 1 }) }
-                    else if (50 < random && random < 75) { bomb_table.push({ i: i, j: j, m: 0, p: 2 }) }
+                    if (0 < random && random < 50) { bomb_table.push({ i: i, j: j, m: 0, p: 0 }) }
+                    else if (50 < random && random < 85) { bomb_table.push({ i: i, j: j, m: 0, p: 1 }) }
+                    else if (85 < random && random < 95) { bomb_table.push({ i: i, j: j, m: 0, p: 2 }) }
                     else { bomb_table.push({ i: i, j: j, m: 0, p: 3 }) }
                     //bomb_table.push({ i: i, j: j,m:0 });
                 }
@@ -288,7 +288,7 @@ function pick_music(){
 }
 function change_cell(id, open = 0) {
     let id_c = id
-
+    
     split_id = id_c.split("_");
     if (multi == 1) {
 
@@ -330,7 +330,7 @@ function change_cell(id, open = 0) {
                     else if (life == 1) { img.src = "resources/life_1_5.png" }
                     document.getElementById("life_counter").innerHTML = `Vidas ${life}`
                     clearInterval(id_timer)
-                    if (life == 0) {if(isPlaying(music)){music.pause()} b = 1; creat_lose(); hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Special" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
+                    if (life == 0) {if(isPlaying(music)){music.pause()} b = 1; creat_lose(); hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Special" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos));return  }
                 }
                 else { cell_tochange.classList.replace("hidden_cell", "bomb"), b = 1 }
 
@@ -340,11 +340,11 @@ function change_cell(id, open = 0) {
                     clearInterval(id_timer);
                     if (multi == 1) {
 
-                        if (selected_cell[2] == 1) { if(isPlaying(music)){music.pause()} creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user1", score: sec, modo: "multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c) }
-                        if (selected_cell[2] == 0) { if(isPlaying(music)){music.pause()} creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user2", score: sec, modo: "multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c) }
+                        if (selected_cell[2] == 1) { if(isPlaying(music)){music.pause()} creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user1", score: 10000+Math.floor(1/Math.pow(sec, 1/2)), modo: "multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c);return }
+                        if (selected_cell[2] == 0) { if(isPlaying(music)){music.pause()} creat_congratulation(), hist_jogos.push({ dim: `${r}x${c}`, user: "user2", score: 10000+Math.floor(1/Math.pow(sec, 1/2)), modo: "multiplayer" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)), creat_map(r, c);return }
                     }
 
-                    else {if(isPlaying(music)){music.pause()} creat_lose(), clearInterval(id_timer), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Clássico" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }
+                    else {if(isPlaying(music)){music.pause()} creat_lose(), clearInterval(id_timer), hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: sec, modo: "Clássico" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos));return}
                 }
             }
         }
@@ -390,7 +390,8 @@ function change_cell(id, open = 0) {
     if (bomb_count == 8) { cell_tochange.classList.replace("hidden_cell", "bomb8"); }
     win_condition = win_condition + 1
 
-    if (document.getElementsByClassName("hidden_cell").length == bomb_table.length) {if(isPlaying(music)){music.pause()} creat_congratulation(); localStorage.setItem("score", `${sec},${user_v}`) }//creat_map(r,c,prob,s)}
+    if (document.getElementsByClassName("hidden_cell").length == bomb_table.length && special==0) {if(isPlaying(music)){music.pause()} creat_congratulation(); hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: 10000+Math.floor(1/Math.pow(sec, 1/2)), modo: "Classico" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos))}//creat_map(r,c,prob,s)}
+    if (document.getElementsByClassName("hidden_cell").length == bomb_table.length && special==1) {if(isPlaying(music)){music.pause()} creat_congratulation(); hist_jogos.push({ dim: `${r}x${c}`, user: localStorage.getItem("user"), score: 10000+Math.floor(1/Math.pow(sec, 1/2)), modo: "Special" }), localStorage.setItem("hist_jogos", JSON.stringify(hist_jogos)) }//creat_map(r,c,prob,s)}
     document.getElementById("bomb_count").innerHTML = `Número de Bombas:${bomb_table.length}`
     if (open == 0) { toggle_p() }
     return //cell_tochange.classList[0]=0
