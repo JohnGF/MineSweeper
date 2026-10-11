@@ -1,0 +1,27 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "available on: https://johngf.github.io/MineSweeper/",
+  "main": "MineSweeper.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnGF/MineSweeper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JohnGF/MineSweeper/issues"
+  },
+  "homepage": "https://github.com/JohnGF/MineSweeper#readme",
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2",
+    "jsdom": "^29.1.1",
+    "jsdom-global": "^3.0.2"
+  }
+}
