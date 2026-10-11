@@ -748,3 +748,4 @@ function color_reset() {
     localStorage.setItem("body_background", "beige")
     localStorage.setItem("text-menu", "black")
 }
+if (typeof module !== "undefined") { module.exports = { creat_map, explorer, change_cell, flag }; }
